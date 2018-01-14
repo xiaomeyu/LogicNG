@@ -69,11 +69,11 @@
     <sonar.exclusions>**/LogicNGPropositional*.java,**/LogicNGPseudoBoolean*.java</sonar.exclusions>
 
     <!-- Dependency Versions -->
-    <version.antlr>4.7</version.antlr>
+    <version.antlr>4.5.3</version.antlr>
     <version.jacoco>0.7.9</version.jacoco>
     <version.coveralls>4.3.0-SNAPSHOT</version.coveralls>
     <version.junit>4.12</version.junit>
-    <version.assertj>2.8.0</version.assertj>
+    <version.assertj>1.7.0</version.assertj>
   </properties>
 
   <build>
@@ -137,6 +137,15 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <configuration>
+          <argLine>-Xms512m -Xmx2048m</argLine>
+        </configuration>
+      </plugin>
+
       <!-- Coveralls.io test coverage -->
       <plugin>
         <groupId>org.eluder.coveralls</groupId>
@@ -193,35 +202,6 @@
       <id>release</id>
       <build>
         <plugins>
-          <!-- Deploy to Maven Central -->
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>false</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-
-          <!-- Sign components -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
           <!-- Compile jar with sources -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>

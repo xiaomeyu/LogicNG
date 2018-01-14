@@ -44,7 +44,7 @@ public abstract class FormulaParser {
    * Constructor.
    * @param f the formula factory
    */
-  public FormulaParser(FormulaFactory f) {
+  FormulaParser(FormulaFactory f) {
     this.f = f;
   }
 

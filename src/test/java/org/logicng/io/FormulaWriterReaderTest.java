@@ -146,38 +146,4 @@ public class FormulaWriterReaderTest {
       file.delete();
     }
   }
-
-  @Test
-  public void testSimpleFormulaOneLineFormatter() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula5.txt";
-    final File file = new File(fileName);
-    final FormulaFactory f = new FormulaFactory();
-    final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
-    FormulaWriter.write(fileName, p1, false, new UTF8StringRepresentation());
-    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
-    try {
-      Assert.assertEquals("A ∧ B ∧ ¬(C ∨ (D ⇒ ¬E))", reader.readLine());
-    } finally {
-      reader.close();
-      file.delete();
-    }
-  }
-
-  @Test
-  public void testSimpleFormulaMultiLineFormatter() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula6.txt";
-    final File file = new File(fileName);
-    final FormulaFactory f = new FormulaFactory();
-    final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
-    FormulaWriter.write(fileName, p1, true, new UTF8StringRepresentation());
-    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
-    try {
-      Assert.assertEquals("A", reader.readLine());
-      Assert.assertEquals("B", reader.readLine());
-      Assert.assertEquals("¬(C ∨ (D ⇒ ¬E))", reader.readLine());
-    } finally {
-      reader.close();
-      file.delete();
-    }
-  }
 }

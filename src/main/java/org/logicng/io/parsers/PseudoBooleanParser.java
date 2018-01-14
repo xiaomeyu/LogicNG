@@ -28,13 +28,16 @@
 
 package org.logicng.io.parsers;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.logicng.formulas.Formula;
 import org.logicng.formulas.FormulaFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A parser for pseudo Boolean formulas.
@@ -79,7 +82,8 @@ public final class PseudoBooleanParser extends FormulaParser {
    */
   public PseudoBooleanParser(final FormulaFactory f) {
     super(f);
-    this.lexer = new PseudoBooleanLexer(null);
+    ANTLRInputStream input = new ANTLRInputStream();
+    this.lexer = new PseudoBooleanLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(this.lexer);
     this.parser = new LogicNGPseudoBooleanParser(tokens);
     this.parser.setFormulaFactory(f);
@@ -88,20 +92,32 @@ public final class PseudoBooleanParser extends FormulaParser {
     this.parser.setErrorHandler(new BailErrorStrategy());
   }
 
-  @Override
-  public Formula parse(final String string) throws ParserException {
-    if (string == null || string.isEmpty())
-      return factory().verum();
+  /**
+   * Parses and returns a given input stream.
+   * @param inputStream an input stream
+   * @return the {@link Formula} representation of this stream
+   * @throws ParserException if there was a problem with the input stream
+   */
+  public Formula parse(InputStream inputStream) throws ParserException {
     try {
-      CharStream input = CharStreams.fromString(string);
+      ANTLRInputStream input = new ANTLRInputStream(inputStream);
       this.lexer.setInputStream(input);
       CommonTokenStream tokens = new CommonTokenStream(this.lexer);
       this.parser.setInputStream(tokens);
       return this.parser.formula().f;
+    } catch (IOException e) {
+      throw new ParserException("IO exception when parsing the formula", e);
     } catch (ParseCancellationException e) {
       throw new ParserException("Parse cancellation exception when parsing the formula", e);
     } catch (LexerException e) {
       throw new ParserException("Lexer exception when parsing the formula.", e);
     }
+  }
+
+  @Override
+  public Formula parse(final String in) throws ParserException {
+    if (in == null)
+      return factory().verum();
+    return this.parse(new ByteArrayInputStream(in.getBytes()));
   }
 }

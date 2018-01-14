@@ -71,9 +71,10 @@ public final class CLClause {
         return -1;
       if (c1.glue > c2.glue)
         return 1;
-      return Long.compare(c2.activity, c1.activity);
+      return (c2.glue < c1.glue) ? -1 : ((c2.glue == c1.glue) ? 0 : 1);
     }
   };
+
   private final LNGIntVector lits;
   private int glue;
   private boolean redundant;

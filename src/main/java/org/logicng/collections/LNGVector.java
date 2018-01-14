@@ -77,7 +77,6 @@ public final class LNGVector<T> implements Iterable<T> {
    * Creates a vector with the given elements.
    * @param elems the elements
    */
-  @SafeVarargs
   public LNGVector(final T... elems) {
     this.elements = Arrays.copyOf(elems, elems.length);
     this.size = elems.length;

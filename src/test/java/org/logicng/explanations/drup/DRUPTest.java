@@ -50,6 +50,8 @@ import org.logicng.solvers.sat.MiniSatConfig;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -159,8 +161,8 @@ public class DRUPTest {
         solver.add(proposition);
       assertThat(solver.sat()).isEqualTo(FALSE);
       final UNSATCore<Proposition> unsatCore = solver.unsatCore();
-      assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(propositions.get(0), propositions.get(1),
-              propositions.get(2), propositions.get(3), propositions.get(4), propositions.get(5));
+      assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(propositions.get(0), propositions.get(1),
+              propositions.get(2), propositions.get(3), propositions.get(4), propositions.get(5)));
       solver.reset();
     }
   }
@@ -196,32 +198,32 @@ public class DRUPTest {
 
     assertThat(solver.sat()).isEqualTo(FALSE);
     UNSATCore<Proposition> unsatCore = solver.unsatCore();
-    assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p1, p2, p3, p4, p5, p6);
+    assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
     solver.loadState(state2);
     assertThat(solver.sat()).isEqualTo(FALSE);
     unsatCore = solver.unsatCore();
-    assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p1, p2, p3, p4, p5, p6);
+    assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
     solver.loadState(state1);
     solver.add(p9);
     assertThat(solver.sat()).isEqualTo(FALSE);
     unsatCore = solver.unsatCore();
-    assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p1, p2, p3, p4, p9);
+    assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p1, p2, p3, p4, p9));
 
     solver.loadState(state1);
     solver.add(p5);
     solver.add(p6);
     assertThat(solver.sat()).isEqualTo(FALSE);
     unsatCore = solver.unsatCore();
-    assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p1, p2, p3, p4, p5, p6);
+    assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p1, p2, p3, p4, p5, p6));
 
     solver.loadState(state1);
     solver.add(p10);
     solver.add(p11);
     assertThat(solver.sat()).isEqualTo(FALSE);
     unsatCore = solver.unsatCore();
-    assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p4, p11);
+    assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p4, p11));
   }
 
   @Test
@@ -232,7 +234,7 @@ public class DRUPTest {
       solver.add(p1);
       assertThat(solver.sat()).isEqualTo(Tristate.FALSE);
       UNSATCore<Proposition> unsatCore = solver.unsatCore();
-      assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p1);
+      assertThat(unsatCore.propositions()).containsExactlyElementsOf(Collections.singletonList(p1));
 
       solver.reset();
       assertThat(solver.sat()).isEqualTo(Tristate.TRUE);
@@ -243,7 +245,7 @@ public class DRUPTest {
       solver.add(p3);
       assertThat(solver.sat()).isEqualTo(Tristate.FALSE);
       unsatCore = solver.unsatCore();
-      assertThat(unsatCore.propositions()).containsExactlyInAnyOrder(p2, p3);
+      assertThat(unsatCore.propositions()).containsExactlyElementsOf(Arrays.asList(p2, p3));
     }
   }
 
