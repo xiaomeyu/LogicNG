@@ -114,11 +114,15 @@ public final class FormulaReader {
    * @throws ParserException if there was a problem parsing the formula
    */
   private static Formula read(final File file, final FormulaParser parser) throws IOException, ParserException {
-    try (final BufferedReader br = new BufferedReader(new FileReader(file))) {
-      final LinkedHashSet<Formula> ops = new LinkedHashSet<>();
+
+    final BufferedReader br = new BufferedReader(new FileReader(file));
+    try {
+      final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>();
       while (br.ready())
         ops.add(parser.parse(br.readLine()));
       return parser.factory().and(ops);
+    } finally {
+      br.close();
     }
   }
 }

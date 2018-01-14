@@ -98,7 +98,7 @@ public abstract class NAryOperator extends Formula {
   @Override
   public SortedSet<Variable> variables() {
     if (this.variables == null) {
-      final SortedSet<Variable> set = new TreeSet<>();
+      final SortedSet<Variable> set = new TreeSet<Variable>();
       for (final Formula op : this.operands)
         set.addAll(op.variables());
       this.variables = Collections.unmodifiableSortedSet(set);
@@ -108,7 +108,7 @@ public abstract class NAryOperator extends Formula {
 
   @Override
   public SortedSet<Literal> literals() {
-    final SortedSet<Literal> set = new TreeSet<>();
+    final SortedSet<Literal> set = new TreeSet<Literal>();
     for (final Formula op : this.operands)
       set.addAll(op.literals());
     return Collections.unmodifiableSortedSet(set);
@@ -124,7 +124,7 @@ public abstract class NAryOperator extends Formula {
 
   @Override
   public Formula restrict(final Assignment assignment) {
-    final LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+    final LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
     for (final Formula op : this.operands)
       nops.add(op.restrict(assignment));
     return f.naryOperator(type, nops);
@@ -140,7 +140,7 @@ public abstract class NAryOperator extends Formula {
           return true;
       return false;
     }
-    final List<Formula> fOps = new ArrayList<>(formula.numberOfOperands());
+    final List<Formula> fOps = new ArrayList<Formula>(formula.numberOfOperands());
     for (final Formula op : formula)
       fOps.add(op);
     for (Formula op : this.operands) {
@@ -153,7 +153,7 @@ public abstract class NAryOperator extends Formula {
 
   @Override
   public Formula substitute(final Substitution substitution) {
-    final LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+    final LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
     for (final Formula op : this.operands)
       nops.add(op.substitute(substitution));
     return f.naryOperator(type, nops);
@@ -168,7 +168,7 @@ public abstract class NAryOperator extends Formula {
   public Formula nnf() {
     Formula nnf = this.transformationCache.get(NNF);
     if (nnf == null) {
-      final LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+      final LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
       for (final Formula op : this.operands)
         nops.add(op.nnf());
       nnf = f.naryOperator(type, nops);

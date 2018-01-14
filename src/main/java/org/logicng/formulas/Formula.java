@@ -61,9 +61,9 @@ public abstract class Formula implements Iterable<Formula> {
   protected Formula(final FType type, final FormulaFactory f) {
     this.type = type;
     this.f = f;
-    this.transformationCache = new TreeMap<>();
-    this.predicateCache = new TreeMap<>();
-    this.functionCache = new TreeMap<>();
+    this.transformationCache = new TreeMap<CacheEntry, Formula>();
+    this.predicateCache = new TreeMap<CacheEntry, Tristate>();
+    this.functionCache = new TreeMap<CacheEntry, Object>();
     this.variables = null;
     this.numberOfAtoms = -1;
     this.numberOfNodes = -1;

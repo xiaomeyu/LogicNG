@@ -122,7 +122,7 @@ public class MUSGenerationTest {
   }
 
   private List<StandardProposition> generatePGPropositions(int n) {
-    final List<StandardProposition> result = new ArrayList<>();
+    final List<StandardProposition> result = new ArrayList<StandardProposition>();
     final Formula pgf = pg.generate(n);
     for (final Formula f : pgf)
       result.add(new StandardProposition(f));
@@ -130,13 +130,13 @@ public class MUSGenerationTest {
   }
 
   private List<StandardProposition> readDimacs(final String fileName) throws IOException {
-    final List<StandardProposition> result = new ArrayList<>();
+    final List<StandardProposition> result = new ArrayList<StandardProposition>();
     final BufferedReader reader = new BufferedReader(new FileReader(fileName));
     while (reader.ready()) {
       final String line = reader.readLine();
       if (!line.startsWith("p") && !line.startsWith("c")) {
         final String[] tokens = line.split("\\s");
-        final List<Literal> clause = new ArrayList<>();
+        final List<Literal> clause = new ArrayList<Literal>();
         for (int i = 0; i < tokens.length - 1; i++) {
           int lit = Integer.parseInt(tokens[i]);
           clause.add(lit < 0 ? f.literal("v" + (-lit), false) : f.literal("v" + lit, true));

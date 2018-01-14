@@ -97,7 +97,7 @@ public final class MSU3 extends MaxSAT {
     this.incrementalStrategy = config.incrementalStrategy;
     this.encoder = new Encoder(config.cardinalityEncoding);
     this.objFunction = new LNGIntVector();
-    this.coreMapping = new TreeMap<>();
+    this.coreMapping = new TreeMap<Integer, Integer>();
     this.activeSoft = new LNGBooleanVector();
     this.output = config.output;
   }

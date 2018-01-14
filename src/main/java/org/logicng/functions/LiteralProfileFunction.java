@@ -59,7 +59,7 @@ public final class LiteralProfileFunction implements FormulaFunction<Map<Literal
    * @return the literal profile
    */
   private static Map<Literal, Integer> nonCachingLiteralProfile(final Formula formula) {
-    final SortedMap<Literal, Integer> map = new TreeMap<>();
+    final SortedMap<Literal, Integer> map = new TreeMap<Literal, Integer>();
     nonCachingRecursion(formula, map);
     return map;
   }
@@ -96,7 +96,7 @@ public final class LiteralProfileFunction implements FormulaFunction<Map<Literal
     final Object cached = formula.functionCacheEntry(LITPROFILE);
     if (cached != null)
       return (Map<Literal, Integer>) cached;
-    Map<Literal, Integer> result = new HashMap<>();
+    Map<Literal, Integer> result = new HashMap<Literal, Integer>();
     if (formula instanceof Literal)
       result.put((Literal) formula, 1);
     else if (formula instanceof PBConstraint)

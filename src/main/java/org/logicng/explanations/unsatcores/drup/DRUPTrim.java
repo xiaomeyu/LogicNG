@@ -98,7 +98,7 @@ public final class DRUPTrim {
     boolean parseReturnValue = s.parse();
     if (!parseReturnValue) {
       result.trivialUnsat = true;
-      result.unsatCore = new LNGVector<>();
+      result.unsatCore = new LNGVector<LNGIntVector>();
     } else {
       result.trivialUnsat = false;
       result.unsatCore = s.verify();
@@ -131,7 +131,7 @@ public final class DRUPTrim {
     private Solver(final LNGVector<LNGIntVector> originalProblem, final LNGVector<LNGIntVector> proof) {
       this.originalProblem = originalProblem;
       this.proof = proof;
-      this.core = new LNGVector<>();
+      this.core = new LNGVector<LNGIntVector>();
       this.delete = true;
     }
 
@@ -327,7 +327,7 @@ public final class DRUPTrim {
       int[] marks = new int[2 * this.nVars + 3];
       int mark = 0;
 
-      final Map<Integer, LNGIntVector> hashTable = new HashMap<>();
+      final Map<Integer, LNGIntVector> hashTable = new HashMap<Integer, LNGIntVector>();
       LNGVector<LNGIntVector> currentFile = originalProblem;
       boolean fileSwitchFlag;
       int clauseNr = 0;
@@ -339,7 +339,7 @@ public final class DRUPTrim {
           this.lemmas = this.DB.size() + 1;
           break;
         }
-        final List<Integer> toks = new ArrayList<>(clause.size() - 1);
+        final List<Integer> toks = new ArrayList<Integer>(clause.size() - 1);
         if (fileSwitchFlag && clause.get(0) == -1) {
           del = true;
         }

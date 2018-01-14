@@ -109,7 +109,7 @@ public final class WMSU3 extends MaxSAT {
     this.assumptions = new LNGIntVector();
     this.objFunction = new LNGIntVector();
     this.coeffs = new LNGIntVector();
-    this.coreMapping = new TreeMap<>();
+    this.coreMapping = new TreeMap<Integer, Integer>();
     this.activeSoft = new LNGBooleanVector();
     this.output = config.output;
   }
@@ -326,9 +326,9 @@ public final class WMSU3 extends MaxSAT {
     int minWeight = 0;
     int posWeight = 0;
     int localCost = 0;
-    LNGVector<LNGIntVector> functions = new LNGVector<>();
+    LNGVector<LNGIntVector> functions = new LNGVector<LNGIntVector>();
     LNGIntVector weights = new LNGIntVector();
-    LNGVector<Encoder> bmoEncodings = new LNGVector<>();
+    LNGVector<Encoder> bmoEncodings = new LNGVector<Encoder>();
     LNGBooleanVector firstEncoding = new LNGBooleanVector();
     functions.push(new LNGIntVector());
     weights.push(0);

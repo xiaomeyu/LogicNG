@@ -76,7 +76,7 @@ public class DRUPTest {
 
   @Test
   public void testUnsatCoresFromDimacs() throws IOException, ParserException {
-    final List<List<Formula>> cnfs = new ArrayList<>(3);
+    final List<List<Formula>> cnfs = new ArrayList<List<Formula>>(3);
     cnfs.add(DimacsReader.readCNF("tests/drup/simple_input.cnf", f));
     cnfs.add(DimacsReader.readCNF("tests/drup/pg4_input.cnf", f));
     cnfs.add(DimacsReader.readCNF("tests/drup/avg_input.cnf", f, "var"));
@@ -144,7 +144,7 @@ public class DRUPTest {
   @Test
   public void testPropositionHandling() throws ParserException {
     final PropositionalParser p = new PropositionalParser(f);
-    final List<Proposition> propositions = new ArrayList<>();
+    final List<Proposition> propositions = new ArrayList<Proposition>();
     propositions.add(new StandardProposition("P1", f.parse("((a & b) => c) &  ((a & b) => d)")));
     propositions.add(new StandardProposition("P2", f.parse("(c & d) <=> ~e")));
     propositions.add(new StandardProposition("P3", new ImmutableFormulaList(p.parse("~e => f | g"))));
@@ -253,7 +253,7 @@ public class DRUPTest {
    * @param cnf          the original problem
    */
   private void verifyCore(final UNSATCore<Proposition> originalCore, final List<Formula> cnf) {
-    final List<Formula> core = new ArrayList<>(originalCore.propositions().size());
+    final List<Formula> core = new ArrayList<Formula>(originalCore.propositions().size());
     for (Proposition prop : originalCore.propositions())
       core.add(prop.formula(f));
     final SoftAssertions softly = new SoftAssertions();

@@ -31,7 +31,6 @@ package org.logicng.explanations.unsatcores;
 import org.logicng.propositions.Proposition;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * An unsatisfiable core (can be a minimal unsatisfiable sub-formula).
@@ -71,18 +70,22 @@ final public class UNSATCore<T extends Proposition> {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(this.propositions, this.isMUS);
-  }
-
-  @Override
   public boolean equals(Object o) {
     if (this == o)
       return true;
     if (!(o instanceof UNSATCore))
       return false;
     UNSATCore unsatCore = (UNSATCore) o;
-    return this.isMUS == unsatCore.isMUS && Objects.equals(this.propositions, unsatCore.propositions);
+    if (isMUS != unsatCore.isMUS)
+      return false;
+    return propositions != null ? propositions.equals(unsatCore.propositions) : unsatCore.propositions == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = propositions != null ? propositions.hashCode() : 0;
+    result = 31 * result + (isMUS ? 1 : 0);
+    return result;
   }
 
   @Override

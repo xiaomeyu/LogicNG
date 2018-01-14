@@ -117,7 +117,7 @@ public class PBEncoder {
           return this.ccEncoder.encode(pbc);
         return new ImmutableFormulaList(FType.AND, this.encode(pbc.operands(), pbc.coefficients(), pbc.rhs()));
       case AND:
-        final List<Formula> list = new LinkedList<>();
+        final List<Formula> list = new LinkedList<Formula>();
         for (final Formula op : normalized) {
           switch (op.type()) {
             case FALSE:
@@ -162,9 +162,9 @@ public class PBEncoder {
       throw new IllegalArgumentException("Overflow in the Encoding");
     if (rhs < 0)
       return Collections.singletonList((Formula) f.falsum());
-    final LNGVector<Literal> simplifiedLits = new LNGVector<>();
+    final LNGVector<Literal> simplifiedLits = new LNGVector<Literal>();
     final LNGIntVector simplifiedCoeffs = new LNGIntVector();
-    final List<Formula> result = new ArrayList<>();
+    final List<Formula> result = new ArrayList<Formula>();
     if (rhs == 0) {
       for (final Literal lit : lits)
         result.add(lit.negate());

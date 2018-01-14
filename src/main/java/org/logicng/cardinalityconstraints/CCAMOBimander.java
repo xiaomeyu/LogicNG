@@ -76,8 +76,8 @@ final class CCAMOBimander implements CCAtMostOne {
    */
   CCAMOBimander(int m) {
     this.m = m;
-    this.groups = new LNGVector<>();
-    this.bits = new LNGVector<>();
+    this.groups = new LNGVector<LNGVector<Literal>>();
+    this.bits = new LNGVector<Literal>();
   }
 
   @Override

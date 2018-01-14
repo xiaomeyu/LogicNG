@@ -98,21 +98,21 @@ public class ExtendedFormulaFactory extends FormulaFactory {
 
   @Override
   public void clear() {
-    this.posLiterals = new LinkedHashMap<>();
-    this.negLiterals = new LinkedHashMap<>();
-    this.generatedVariables = new LinkedHashSet<>();
-    this.nots = new LinkedHashMap<>();
-    this.implications = new LinkedHashMap<>();
-    this.equivalences = new LinkedHashMap<>();
-    this.ands2 = new LinkedHashMap<>();
-    this.ands3 = new LinkedHashMap<>();
-    this.ands4 = new LinkedHashMap<>();
-    this.andsN = new LinkedHashMap<>();
-    this.ors2 = new LinkedHashMap<>();
-    this.ors3 = new LinkedHashMap<>();
-    this.ors4 = new LinkedHashMap<>();
-    this.orsN = new LinkedHashMap<>();
-    this.pbConstraints = new LinkedHashMap<>();
+    this.posLiterals = new LinkedHashMap<String, Variable>();
+    this.negLiterals = new LinkedHashMap<String, Literal>();
+    this.generatedVariables = new LinkedHashSet<Variable>();
+    this.nots = new LinkedHashMap<Formula, Not>();
+    this.implications = new LinkedHashMap<org.logicng.util.Pair<Formula, Formula>, Implication>();
+    this.equivalences = new LinkedHashMap<LinkedHashSet<? extends Formula>, Equivalence>();
+    this.ands2 = new LinkedHashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ands3 = new LinkedHashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ands4 = new LinkedHashMap<LinkedHashSet<? extends Formula>, And>();
+    this.andsN = new LinkedHashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ors2 = new LinkedHashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.ors3 = new LinkedHashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.ors4 = new LinkedHashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.orsN = new LinkedHashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.pbConstraints = new LinkedHashMap<FormulaFactory.PBOperands, PBConstraint>();
     this.ccCounter = 0;
     this.pbCounter = 0;
     this.cnfCounter = 0;

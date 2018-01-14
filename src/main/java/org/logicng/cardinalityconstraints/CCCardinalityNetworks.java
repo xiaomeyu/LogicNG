@@ -79,8 +79,8 @@ final class CCCardinalityNetworks {
 
   void buildAMK(final EncodingResult result, final Variable[] vars, int rhs) {
     result.reset();
-    final LNGVector<Literal> input = new LNGVector<>();
-    final LNGVector<Literal> output = new LNGVector<>();
+    final LNGVector<Literal> input = new LNGVector<Literal>();
+    final LNGVector<Literal> output = new LNGVector<Literal>();
     if (rhs > vars.length / 2) {
       int geq = vars.length - rhs;
       for (final Variable v : vars)
@@ -98,8 +98,8 @@ final class CCCardinalityNetworks {
   }
 
   void buildAMKForIncremental(final EncodingResult result, final Variable[] vars, int rhs) {
-    final LNGVector<Literal> input = new LNGVector<>();
-    final LNGVector<Literal> output = new LNGVector<>();
+    final LNGVector<Literal> input = new LNGVector<Literal>();
+    final LNGVector<Literal> output = new LNGVector<Literal>();
     for (final Variable var : vars)
       input.push(var);
     this.sorting.sort(rhs + 1, input, result, output, INPUT_TO_OUTPUT);
@@ -110,8 +110,8 @@ final class CCCardinalityNetworks {
 
   void buildALK(final EncodingResult result, final Variable[] vars, int rhs) {
     result.reset();
-    final LNGVector<Literal> input = new LNGVector<>();
-    final LNGVector<Literal> output = new LNGVector<>();
+    final LNGVector<Literal> input = new LNGVector<Literal>();
+    final LNGVector<Literal> output = new LNGVector<Literal>();
     final int newRHS = vars.length - rhs;
     if (newRHS > vars.length / 2) {
       int geq = vars.length - newRHS;
@@ -130,8 +130,8 @@ final class CCCardinalityNetworks {
   }
 
   void buildALKForIncremental(final EncodingResult result, final Variable[] vars, int rhs) {
-    final LNGVector<Literal> input = new LNGVector<>();
-    final LNGVector<Literal> output = new LNGVector<>();
+    final LNGVector<Literal> input = new LNGVector<Literal>();
+    final LNGVector<Literal> output = new LNGVector<Literal>();
     for (final Variable var : vars)
       input.push(var.negate());
     final int newRHS = vars.length - rhs;
@@ -143,8 +143,8 @@ final class CCCardinalityNetworks {
 
   void buildEXK(final EncodingResult result, final Variable[] vars, int rhs) {
     result.reset();
-    final LNGVector<Literal> input = new LNGVector<>();
-    final LNGVector<Literal> output = new LNGVector<>();
+    final LNGVector<Literal> input = new LNGVector<Literal>();
+    final LNGVector<Literal> output = new LNGVector<Literal>();
     for (final Variable var : vars)
       input.push(var);
     this.sorting.sort(rhs + 1, input, result, output, BOTH);

@@ -237,7 +237,7 @@ public final class MiniSat extends SATSolver {
   @Override
   protected void addClauseWithRelaxation(Variable relaxationVar, Formula formula) {
     this.result = UNDEF;
-    final SortedSet<Literal> literals = new TreeSet<>(formula.literals());
+    final SortedSet<Literal> literals = new TreeSet<Literal>(formula.literals());
     literals.add(relaxationVar);
     this.solver.addClause(generateClauseVector(literals), null);
   }
@@ -266,7 +266,7 @@ public final class MiniSat extends SATSolver {
 
   @Override
   public Tristate sat(final SATHandler handler, final Collection<? extends Literal> assumptions) {
-    final Set<Literal> assumptionSet = new LinkedHashSet<>(assumptions);
+    final Set<Literal> assumptionSet = new LinkedHashSet<Literal>(assumptions);
     final LNGIntVector assumptionVec = new LNGIntVector(assumptionSet.size());
     for (final Literal literal : assumptionSet) {
       int index = this.solver.idxForName(literal.name());
@@ -301,11 +301,11 @@ public final class MiniSat extends SATSolver {
 
   @Override
   public List<Assignment> enumerateAllModels(Collection<Variable> variables, Collection<Variable> additionalVariables) {
-    List<Assignment> models = new LinkedList<>();
+    List<Assignment> models = new LinkedList<Assignment>();
     SolverState stateBeforeEnumeration = null;
     if (this.style == SolverStyle.MINISAT && incremental)
       stateBeforeEnumeration = this.saveState();
-    SortedSet<Variable> allVariables = new TreeSet<>();
+    SortedSet<Variable> allVariables = new TreeSet<Variable>();
     if (variables == null) {
       allVariables = null;
     } else {
@@ -330,12 +330,12 @@ public final class MiniSat extends SATSolver {
 
   @Override
   public List<Assignment> enumerateAllModels(Collection<Variable> variables, Collection<Variable> additionalVariables, ModelEnumerationHandler handler) {
-    List<Assignment> models = new LinkedList<>();
+    List<Assignment> models = new LinkedList<Assignment>();
     SolverState stateBeforeEnumeration = null;
     if (this.style == SolverStyle.MINISAT && incremental)
       stateBeforeEnumeration = this.saveState();
     boolean proceed = true;
-    SortedSet<Variable> allVariables = new TreeSet<>();
+    SortedSet<Variable> allVariables = new TreeSet<Variable>();
     if (variables == null) {
       allVariables = null;
     } else {
@@ -376,7 +376,7 @@ public final class MiniSat extends SATSolver {
 
   @Override
   public SortedSet<Variable> knownVariables() {
-    final SortedSet<Variable> result = new TreeSet<>();
+    final SortedSet<Variable> result = new TreeSet<Variable>();
     final int nVars = this.solver.nVars();
     for (final Map.Entry<String, Integer> entry : this.solver.name2idx().entrySet())
       if (entry.getValue() < nVars)
@@ -400,8 +400,8 @@ public final class MiniSat extends SATSolver {
 
     DRUPTrim trimmer = new DRUPTrim();
 
-    Map<Formula, Proposition> clause2proposition = new HashMap<>();
-    final LNGVector<LNGIntVector> clauses = new LNGVector<>(this.underlyingSolver().pgOriginalClauses().size());
+    Map<Formula, Proposition> clause2proposition = new HashMap<Formula, Proposition>();
+    final LNGVector<LNGIntVector> clauses = new LNGVector<LNGIntVector>(this.underlyingSolver().pgOriginalClauses().size());
     for (MiniSatStyleSolver.ProofInformation pi : this.underlyingSolver().pgOriginalClauses()) {
       clauses.push(pi.clause());
       final Formula clause = getFormulaForVector(pi.clause());
@@ -413,16 +413,16 @@ public final class MiniSat extends SATSolver {
 
     if (containsEmptyClause(clauses)) {
       final Proposition emptyClause = clause2proposition.get(f.falsum());
-      return new UNSATCore<>(Collections.singletonList(emptyClause), true);
+      return new UNSATCore<Proposition>(Collections.singletonList(emptyClause), true);
     }
 
     final DRUPTrim.DRUPResult result = trimmer.compute(clauses, this.underlyingSolver().pgProof());
     if (result.trivialUnsat())
       return handleTrivialCase();
-    final LinkedHashSet<Proposition> propositions = new LinkedHashSet<>();
+    final LinkedHashSet<Proposition> propositions = new LinkedHashSet<Proposition>();
     for (LNGIntVector vector : result.unsatCore())
       propositions.add(clause2proposition.get(getFormulaForVector(vector)));
-    return new UNSATCore<>(new ArrayList<>(propositions), false);
+    return new UNSATCore<Proposition>(new ArrayList<Proposition>(propositions), false);
   }
 
   /**
@@ -489,10 +489,10 @@ public final class MiniSat extends SATSolver {
       for (int j = i + 1; j < clauses.size(); j++) {
         if (clauses.get(i).clause().size() == 1 && clauses.get(j).clause().size() == 1
                 && clauses.get(i).clause().get(0) + clauses.get(j).clause().get(0) == 0) {
-          LinkedHashSet<Proposition> propositions = new LinkedHashSet<>();
+          LinkedHashSet<Proposition> propositions = new LinkedHashSet<Proposition>();
           propositions.add(clauses.get(i).proposition());
           propositions.add(clauses.get(j).proposition());
-          return new UNSATCore<>(new ArrayList<>(propositions), false);
+          return new UNSATCore<Proposition>(new ArrayList<Proposition>(propositions), false);
         }
       }
     throw new IllegalStateException("Should be a trivial unsat core, but did not found one.");
@@ -506,7 +506,7 @@ public final class MiniSat extends SATSolver {
   }
 
   private Formula getFormulaForVector(LNGIntVector vector) {
-    final List<Literal> literals = new ArrayList<>(vector.size());
+    final List<Literal> literals = new ArrayList<Literal>(vector.size());
     for (int i = 0; i < vector.size(); i++) {
       int lit = vector.get(i);
       String varName = this.underlyingSolver().nameForIdx(Math.abs(lit) - 1);

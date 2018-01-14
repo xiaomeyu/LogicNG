@@ -80,7 +80,7 @@ public final class CCSorting {
    * Constructs a new sorting network.
    */
   public CCSorting() {
-    this.auxVars = new LNGVector<>();
+    this.auxVars = new LNGVector<LNGVector<Literal>>();
   }
 
   private static int counterSorterValue(int m, int n) {
@@ -182,10 +182,10 @@ public final class CCSorting {
     assert output.size() == 0;
     assert n > 1;
     assert m <= n;
-    final LNGVector<Literal> tmpLitsA = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsB = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsO1 = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsO2 = new LNGVector<>();
+    final LNGVector<Literal> tmpLitsA = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsB = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsO1 = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsO2 = new LNGVector<Literal>();
 
     for (int i = 0; i < l; i++)
       tmpLitsA.push(input.get(i));
@@ -250,7 +250,7 @@ public final class CCSorting {
     int n = input.size();
     assert n < 20;
     int bitmask = 1;
-    final LNGVector<Literal> clause = new LNGVector<>();
+    final LNGVector<Literal> clause = new LNGVector<Literal>();
     output.clear();
     for (int i = 0; i < m; i++)
       output.push(formula.newVariable());
@@ -337,12 +337,12 @@ public final class CCSorting {
       output.push(y2);
       return;
     }
-    final LNGVector<Literal> oddMerge = new LNGVector<>();
-    final LNGVector<Literal> evenMerge = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsOddA = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsOddB = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsEvenA = new LNGVector<>();
-    final LNGVector<Literal> tmpLitsEvenB = new LNGVector<>();
+    final LNGVector<Literal> oddMerge = new LNGVector<Literal>();
+    final LNGVector<Literal> evenMerge = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsOddA = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsOddB = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsEvenA = new LNGVector<Literal>();
+    final LNGVector<Literal> tmpLitsEvenB = new LNGVector<Literal>();
 
     for (int i = 0; i < a2; i = i + 2)
       tmpLitsOddA.push(inputA.get(i));

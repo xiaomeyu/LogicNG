@@ -195,10 +195,10 @@ public abstract class MiniSatStyleSolver {
     this.initializeConfig();
     this.ok = true;
     this.qhead = 0;
-    this.clauses = new LNGVector<>();
-    this.learnts = new LNGVector<>();
-    this.watches = new LNGVector<>();
-    this.vars = new LNGVector<>();
+    this.clauses = new LNGVector<MSClause>();
+    this.learnts = new LNGVector<MSClause>();
+    this.watches = new LNGVector<LNGVector<MSWatcher>>();
+    this.vars = new LNGVector<MSVariable>();
     this.orderHeap = new LNGHeap(this);
     this.trail = new LNGIntVector();
     this.trailLim = new LNGIntVector();
@@ -214,12 +214,12 @@ public abstract class MiniSatStyleSolver {
     this.simpDBProps = 0;
     this.clausesLiterals = 0;
     this.learntsLiterals = 0;
-    this.name2idx = new TreeMap<>();
-    this.idx2name = new TreeMap<>();
+    this.name2idx = new TreeMap<String, Integer>();
+    this.idx2name = new TreeMap<Integer, String>();
     this.canceledByHandler = false;
     if (this.config.proofGeneration) {
-      this.pgOriginalClauses = new LNGVector<>();
-      this.pgProof = new LNGVector<>();
+      this.pgOriginalClauses = new LNGVector<ProofInformation>();
+      this.pgProof = new LNGVector<LNGIntVector>();
     }
   }
 

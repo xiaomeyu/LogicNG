@@ -140,7 +140,7 @@ public class CCEncoder {
   public Pair<ImmutableFormulaList, CCIncrementalData> encodeIncremental(final PBConstraint cc) {
     final EncodingResult result = EncodingResult.resultForFormula(f);
     final CCIncrementalData incData = this.encodeIncremental(cc, result);
-    return new Pair<>(new ImmutableFormulaList(FType.AND, result.result()), incData);
+    return new Pair<ImmutableFormulaList, CCIncrementalData>(new ImmutableFormulaList(FType.AND, result.result()), incData);
   }
 
   /**

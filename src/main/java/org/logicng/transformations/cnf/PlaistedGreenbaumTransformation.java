@@ -117,7 +117,7 @@ public final class PlaistedGreenbaumTransformation implements FormulaTransformat
         return f.verum();
       case OR:
       case AND:
-        final List<Formula> nops = new ArrayList<>();
+        final List<Formula> nops = new ArrayList<Formula>();
         nops.add(this.computePosPolarity(formula, fixedPGVar));
         for (final Formula op : formula)
           nops.add(this.computeTransformation(op, null));
@@ -135,14 +135,14 @@ public final class PlaistedGreenbaumTransformation implements FormulaTransformat
     final Formula pgVar = fixedPGVar != null ? fixedPGVar : pgVariable(formula);
     switch (formula.type()) {
       case AND:
-        List<Formula> nops = new ArrayList<>();
+        List<Formula> nops = new ArrayList<Formula>();
         for (final Formula op : formula)
           nops.add(f.or(pgVar.negate(), pgVariable(op)));
         result = f.and(nops);
         formula.setTransformationCacheEntry(PLAISTED_GREENBAUM_POS, result);
         return result;
       case OR:
-        nops = new ArrayList<>();
+        nops = new ArrayList<Formula>();
         nops.add(pgVar.negate());
         for (final Formula op : formula)
           nops.add(pgVariable(op));

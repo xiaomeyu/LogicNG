@@ -183,7 +183,7 @@ public class SATTest {
   @Test
   public void testAnd3() {
     for (final SATSolver s : this.solvers) {
-      final List<Formula> formulas = new ArrayList<>(3);
+      final List<Formula> formulas = new ArrayList<Formula>(3);
       formulas.add(f.literal("a", true));
       formulas.add(f.literal("b", false));
       formulas.add(f.literal("a", false));
@@ -245,8 +245,8 @@ public class SATTest {
   @Test
   public void testPBC() {
     for (SATSolver s : this.solvers) {
-      List<Literal> lits = new ArrayList<>();
-      List<Integer> coeffs = new ArrayList<>();
+      List<Literal> lits = new ArrayList<Literal>();
+      List<Integer> coeffs = new ArrayList<Integer>();
       for (int i = 0; i < 5; i++) {
         lits.add(f.literal("x" + i, i % 2 == 0));
         coeffs.add(i + 1);
@@ -457,7 +457,7 @@ public class SATTest {
 
   @Test
   public void testDimacsFiles() throws IOException {
-    final Map<String, Boolean> expectedResults = new HashMap<>();
+    final Map<String, Boolean> expectedResults = new HashMap<String, Boolean>();
     final BufferedReader reader = new BufferedReader(new FileReader("tests/sat/results.txt"));
     while (reader.ready()) {
       final String[] tokens = reader.readLine().split(";");
@@ -488,7 +488,7 @@ public class SATTest {
         break;
     }
     String[] tokens;
-    final List<Literal> literals = new ArrayList<>();
+    final List<Literal> literals = new ArrayList<Literal>();
     while (reader.ready()) {
       tokens = reader.readLine().split("\\s+");
       if (tokens.length >= 2) {
@@ -529,8 +529,8 @@ public class SATTest {
   public void testModelEnumeration() {
     for (int i = 0; i < this.solvers.length - 1; i++) {
       final SATSolver s = this.solvers[i];
-      final SortedSet<Variable> lits = new TreeSet<>();
-      final SortedSet<Variable> firstFive = new TreeSet<>();
+      final SortedSet<Variable> lits = new TreeSet<Variable>();
+      final SortedSet<Variable> firstFive = new TreeSet<Variable>();
       for (int j = 0; j < 20; j++) {
         Variable lit = f.variable("x" + j);
         lits.add(lit);
@@ -555,8 +555,8 @@ public class SATTest {
   public void testModelEnumerationWithHandler() {
     for (int i = 0; i < this.solvers.length - 1; i++) {
       final SATSolver s = this.solvers[i];
-      final SortedSet<Variable> lits = new TreeSet<>();
-      final SortedSet<Variable> firstFive = new TreeSet<>();
+      final SortedSet<Variable> lits = new TreeSet<Variable>();
+      final SortedSet<Variable> firstFive = new TreeSet<Variable>();
       for (int j = 0; j < 20; j++) {
         Variable lit = f.variable("x" + j);
         lits.add(lit);
@@ -685,7 +685,7 @@ public class SATTest {
   public void testCLSatWithLitCollection() {
     CleaneLing solver = CleaneLing.minimalistic(f);
     solver.add(F.AND1);
-    List<Literal> lits = new ArrayList<>();
+    List<Literal> lits = new ArrayList<Literal>();
     lits.add(F.A);
     lits.add(F.B);
     solver.sat(new TimeoutSATHandler(10000), lits);
@@ -736,7 +736,7 @@ public class SATTest {
     minisat.add(phi);
     minicard.add(phi);
     cleaneling.add(phi);
-    final SortedSet<Variable> expected = new TreeSet<>(Arrays.asList(
+    final SortedSet<Variable> expected = new TreeSet<Variable>(Arrays.asList(
             f.variable("x1"),
             f.variable("x2"),
             f.variable("x3"),
@@ -751,7 +751,7 @@ public class SATTest {
     minisat.add(f.variable("x6"));
     minicard.add(f.variable("x6"));
     cleaneling.add(f.variable("x6"));
-    final SortedSet<Variable> expected2 = new TreeSet<>(Arrays.asList(
+    final SortedSet<Variable> expected2 = new TreeSet<Variable>(Arrays.asList(
             f.variable("x1"),
             f.variable("x2"),
             f.variable("x3"),
@@ -773,7 +773,7 @@ public class SATTest {
   public void testAddWithoutUnknown() throws ParserException {
     final PropositionalParser parser = new PropositionalParser(f);
     final Formula phi = parser.parse("x1 & (~x2 | x3) & (x4 | ~x5)");
-    final SortedSet<Variable> phiVars = new TreeSet<>(Arrays.asList(
+    final SortedSet<Variable> phiVars = new TreeSet<Variable>(Arrays.asList(
             f.variable("x1"),
             f.variable("x2"),
             f.variable("x3"),

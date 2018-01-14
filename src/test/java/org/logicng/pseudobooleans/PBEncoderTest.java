@@ -69,8 +69,8 @@ public class PBEncoderTest {
   public void testCC0() {
     for (final PBEncoder encoder : this.encoders) {
       final int numLits = 100;
-      final List<Literal> lits = new LinkedList<>();
-      final List<Integer> coeffs = new LinkedList<>();
+      final List<Literal> lits = new LinkedList<Literal>();
+      final List<Integer> coeffs = new LinkedList<Integer>();
       final Variable[] problemLits = new Variable[numLits];
       for (int i = 0; i < numLits; i++) {
         final Variable var = f.variable("v" + i);
@@ -93,8 +93,8 @@ public class PBEncoderTest {
     for (final PBEncoder encoder : this.encoders) {
       final int numLits = 100;
       final int rhs = 1;
-      final List<Literal> lits = new LinkedList<>();
-      final List<Integer> coeffs = new LinkedList<>();
+      final List<Literal> lits = new LinkedList<Literal>();
+      final List<Integer> coeffs = new LinkedList<Integer>();
       final Variable[] problemLits = new Variable[numLits];
       for (int i = 0; i < numLits; i++) {
         final Variable var = f.variable("v" + i);
@@ -155,10 +155,10 @@ public class PBEncoderTest {
 
   @Test
   public void testSpecialCases() {
-    List<Literal> lits = new ArrayList<>();
+    List<Literal> lits = new ArrayList<Literal>();
     lits.add(f.literal("m", true));
     lits.add(f.literal("n", true));
-    List<Integer> coeffs = new ArrayList<>();
+    List<Integer> coeffs = new ArrayList<Integer>();
     coeffs.add(2);
     coeffs.add(1);
     PBConstraint truePBC = f.pbc(CType.GE, 0, lits, coeffs);
@@ -169,10 +169,10 @@ public class PBEncoderTest {
 
   @Test
   public void testCCNormalized() {
-    List<Literal> lits = new ArrayList<>();
+    List<Literal> lits = new ArrayList<Literal>();
     lits.add(f.literal("m", true));
     lits.add(f.literal("n", true));
-    List<Integer> coeffs2 = new ArrayList<>();
+    List<Integer> coeffs2 = new ArrayList<Integer>();
     coeffs2.add(2);
     coeffs2.add(2);
     PBConstraint normCC = f.pbc(CType.LE, 2, lits, coeffs2);

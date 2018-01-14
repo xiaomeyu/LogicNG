@@ -91,8 +91,8 @@ final class PBAdderNetworks implements PBEncoding {
   @Override
   public List<Formula> encode(LNGVector<Literal> lits, LNGIntVector coeffs, int rhs, List<Formula> formula) {
     this.formula = formula;
-    final LNGVector<Literal> result = new LNGVector<>();
-    final LNGVector<LinkedList<Literal>> buckets = new LNGVector<>();
+    final LNGVector<Literal> result = new LNGVector<Literal>();
+    final LNGVector<LinkedList<Literal>> buckets = new LNGVector<LinkedList<Literal>>();
     int nb = ldInt(rhs);
     for (int iBit = 0; iBit < nb; ++iBit) {
       buckets.push(new LinkedList<Literal>());
@@ -157,7 +157,7 @@ final class PBAdderNetworks implements PBEncoding {
 
   private void lessThanOrEqual(final LNGVector<Literal> xs, final LNGBooleanVector ys, final List<Formula> formula) {
     assert xs.size() == ys.size();
-    final List<Literal> clause = new ArrayList<>();
+    final List<Literal> clause = new ArrayList<Literal>();
     boolean skip;
     for (int i = 0; i < xs.size(); ++i) {
       if (ys.get(i) || xs.get(i) == null)

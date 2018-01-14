@@ -105,7 +105,7 @@ public final class UnitPropagation implements FormulaTransformation {
       assert decisionLevel() == 0;
       if (!this.ok || this.propagate() != null)
         return f.falsum();
-      final List<Formula> clauses = new ArrayList<>();
+      final List<Formula> clauses = new ArrayList<Formula>();
       for (final MSClause clause : this.clauses)
         clauses.add(clauseToFormula(clause, f));
       for (int i = 0; i < this.trail.size(); i++)
@@ -132,7 +132,7 @@ public final class UnitPropagation implements FormulaTransformation {
      * @return the transformed clause
      */
     private Formula clauseToFormula(final MSClause clause, final FormulaFactory f) {
-      final List<Literal> literals = new ArrayList<>(clause.size());
+      final List<Literal> literals = new ArrayList<Literal>(clause.size());
       for (int i = 0; i < clause.size(); i++) {
         int lit = clause.get(i);
         switch (value(lit)) {

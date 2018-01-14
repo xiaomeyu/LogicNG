@@ -143,7 +143,7 @@ public final class Not extends Formula {
       switch (this.operand.type) {
         case AND:
         case OR:
-          final LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+          final LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
           for (final Formula op : this.operand)
             nops.add(op.negate().nnf());
           nnf = f.naryOperator(this.operand.type == FType.AND ? FType.OR : FType.AND, nops);

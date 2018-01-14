@@ -75,9 +75,9 @@ final class CCAMOCommander implements CCAtMostOne {
    */
   CCAMOCommander(int k) {
     this.k = k;
-    this.literals = new LNGVector<>();
-    this.nextLiterals = new LNGVector<>();
-    this.currentLiterals = new LNGVector<>();
+    this.literals = new LNGVector<Literal>();
+    this.nextLiterals = new LNGVector<Literal>();
+    this.currentLiterals = new LNGVector<Literal>();
   }
 
   @Override

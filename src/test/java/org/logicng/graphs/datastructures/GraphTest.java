@@ -46,7 +46,7 @@ import java.io.IOException;
 public class GraphTest {
 
   public static Graph<Long> getLongGraph(String id) throws IOException {
-    Graph<Long> g = new Graph<>(id + "-Long");
+    Graph<Long> g = new Graph<Long>(id + "-Long");
 
     final BufferedReader reader = new BufferedReader(new FileReader("tests/graphs/graph" + id + ".txt"));
 
@@ -90,7 +90,7 @@ public class GraphTest {
   @Test
   public void testFormulaGraph() {
     FormulaFactory f = new FormulaFactory();
-    Graph<Formula> g = new Graph<>("Graph with Formula nodes.");
+    Graph<Formula> g = new Graph<Formula>("Graph with Formula nodes.");
 
     Variable a = f.variable("A");
     Node<Formula> an = g.node(a);
@@ -117,8 +117,8 @@ public class GraphTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testTwoGraphs() {
-    Graph<String> g1 = new Graph<>("G1");
-    Graph<String> g2 = new Graph<>("G2");
+    Graph<String> g1 = new Graph<String>("G1");
+    Graph<String> g2 = new Graph<String>("G2");
 
     Node<String> a = g1.node("A");
     Node<String> b = g2.node("B");

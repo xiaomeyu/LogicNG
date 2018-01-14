@@ -57,7 +57,7 @@ public class GraphDimacsFileWriterTest {
 
   @Test
   public void testSmall() throws IOException {
-    Graph<String> g = new Graph<>();
+    Graph<String> g = new Graph<String>();
     g.connect(g.node("A"), g.node("B"));
     g.node("C");
     testFiles("small", g);
@@ -96,10 +96,10 @@ public class GraphDimacsFileWriterTest {
   private void assertFilesEqual(final File expected, final File actual) throws IOException {
     final BufferedReader expReader = new BufferedReader(new FileReader(expected));
     final BufferedReader actReader = new BufferedReader(new FileReader(actual));
-    final List<String> expEdgeLines = new ArrayList<>();
-    List<String> actEdgeLines = new ArrayList<>();
-    List<String> expNodeLines = new ArrayList<>();
-    List<String> actNodeLines = new ArrayList<>();
+    final List<String> expEdgeLines = new ArrayList<String>();
+    List<String> actEdgeLines = new ArrayList<String>();
+    List<String> expNodeLines = new ArrayList<String>();
+    List<String> actNodeLines = new ArrayList<String>();
     for (int lineNumber = 1; expReader.ready() && actReader.ready(); lineNumber++) {
       String exp = expReader.readLine();
       String act = actReader.readLine();

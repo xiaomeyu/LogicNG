@@ -201,7 +201,7 @@ public class AssignmentTest {
     ass.addLiteral(F.B);
     ass.addLiteral(F.NX);
     ass.addLiteral(F.NY);
-    List<Literal> lits = new ArrayList<>();
+    List<Literal> lits = new ArrayList<Literal>();
     lits.add(F.A);
     lits.add(F.X);
     lits.add(F.C);

@@ -24,8 +24,8 @@ public class UNSATCoreTest {
 
 
   public UNSATCoreTest() throws ParserException {
-    props1 = new ArrayList<>();
-    props2 = new ArrayList<>();
+    props1 = new ArrayList<StandardProposition>();
+    props2 = new ArrayList<StandardProposition>();
     FormulaFactory f = new FormulaFactory();
     PropositionalParser parser = new PropositionalParser(f);
     props1.add(new StandardProposition(parser.parse("a | b")));
@@ -37,8 +37,8 @@ public class UNSATCoreTest {
     props2.add(new StandardProposition(parser.parse("a | ~b")));
     props2.add(new StandardProposition(parser.parse("~a | ~b")));
     props2.add(new StandardProposition(parser.parse("~a | ~b | c")));
-    this.core1 = new UNSATCore<>(props1, true);
-    this.core2 = new UNSATCore<>(props2, false);
+    this.core1 = new UNSATCore<StandardProposition>(props1, true);
+    this.core2 = new UNSATCore<StandardProposition>(props2, false);
   }
 
   @Test
@@ -52,16 +52,16 @@ public class UNSATCoreTest {
   @Test
   public void testHashCode() {
     Assert.assertEquals(core1.hashCode(), core1.hashCode());
-    Assert.assertEquals(core2.hashCode(), new UNSATCore<>(props2, false).hashCode());
+    Assert.assertEquals(core2.hashCode(), new UNSATCore<StandardProposition>(props2, false).hashCode());
   }
 
   @Test
   public void testEquals() {
     Assert.assertEquals(core1, core1);
-    Assert.assertEquals(core1, new UNSATCore<>(props1, true));
+    Assert.assertEquals(core1, new UNSATCore<StandardProposition>(props1, true));
     Assert.assertNotEquals(core1, core2);
-    Assert.assertNotEquals(core1, new UNSATCore<>(props1, false));
-    Assert.assertNotEquals(core1, new UNSATCore<>(props2, true));
+    Assert.assertNotEquals(core1, new UNSATCore<StandardProposition>(props1, false));
+    Assert.assertNotEquals(core1, new UNSATCore<StandardProposition>(props2, true));
     Assert.assertNotEquals(core1, null);
     Assert.assertNotEquals(core1, "String");
   }

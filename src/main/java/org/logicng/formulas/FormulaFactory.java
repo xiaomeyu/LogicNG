@@ -48,7 +48,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import static org.logicng.formulas.FType.AND;
@@ -121,7 +120,7 @@ public class FormulaFactory {
     this.clear();
     this.formulaAdditionResult = new boolean[2];
     this.stringRepresentation = stringRepresentation;
-    this.configurations = new EnumMap<>(ConfigurationType.class);
+    this.configurations = new EnumMap<ConfigurationType, Configuration>(ConfigurationType.class);
     this.cnfEncoder = new CNFEncoder(this);
     this.subformulaFunction = new SubNodeFunction();
     if (!name.isEmpty()) {
@@ -170,21 +169,21 @@ public class FormulaFactory {
    * Removes all formulas from the factory cache.
    */
   public void clear() {
-    this.posLiterals = new HashMap<>();
-    this.negLiterals = new HashMap<>();
-    this.generatedVariables = new HashSet<>();
-    this.nots = new HashMap<>();
-    this.implications = new HashMap<>();
-    this.equivalences = new HashMap<>();
-    this.ands2 = new HashMap<>();
-    this.ands3 = new HashMap<>();
-    this.ands4 = new HashMap<>();
-    this.andsN = new HashMap<>();
-    this.ors2 = new HashMap<>();
-    this.ors3 = new HashMap<>();
-    this.ors4 = new HashMap<>();
-    this.orsN = new HashMap<>();
-    this.pbConstraints = new HashMap<>();
+    this.posLiterals = new HashMap<String, Variable>();
+    this.negLiterals = new HashMap<String, Literal>();
+    this.generatedVariables = new HashSet<Variable>();
+    this.nots = new HashMap<Formula, Not>();
+    this.implications = new HashMap<Pair<Formula, Formula>, Implication>();
+    this.equivalences = new HashMap<LinkedHashSet<? extends Formula>, Equivalence>();
+    this.ands2 = new HashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ands3 = new HashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ands4 = new HashMap<LinkedHashSet<? extends Formula>, And>();
+    this.andsN = new HashMap<LinkedHashSet<? extends Formula>, And>();
+    this.ors2 = new HashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.ors3 = new HashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.ors4 = new HashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.orsN = new HashMap<LinkedHashSet<? extends Formula>, Or>();
+    this.pbConstraints = new HashMap<PBOperands, PBConstraint>();
     this.ccCounter = 0;
     this.pbCounter = 0;
     this.cnfCounter = 0;
@@ -274,7 +273,7 @@ public class FormulaFactory {
       return this.not(left);
     if (left.equals(right))
       return this.verum();
-    final Pair<Formula, Formula> key = new Pair<>(left, right);
+    final Pair<Formula, Formula> key = new Pair<Formula, Formula>(left, right);
     Implication implication = this.implications.get(key);
     if (implication == null) {
       implication = new Implication(left, right, this);
@@ -302,7 +301,7 @@ public class FormulaFactory {
       return this.verum();
     if (left.equals(right.negate()))
       return this.falsum();
-    final LinkedHashSet<Formula> key = new LinkedHashSet<>(Arrays.asList(left, right));
+    final LinkedHashSet<Formula> key = new LinkedHashSet<Formula>(Arrays.asList(left, right));
     Equivalence equivalence = this.equivalences.get(key);
     if (equivalence == null) {
       equivalence = new Equivalence(left, right, this);
@@ -381,7 +380,7 @@ public class FormulaFactory {
    * @return a new conjunction
    */
   public Formula and(final Formula... operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>(operands.length);
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>(operands.length);
     Collections.addAll(ops, operands);
     return this.constructAnd(ops);
   }
@@ -394,7 +393,7 @@ public class FormulaFactory {
    * @return a new conjunction
    */
   public Formula and(final Collection<? extends Formula> operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>(operands);
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>(operands);
     return this.constructAnd(ops);
   }
 
@@ -469,7 +468,7 @@ public class FormulaFactory {
    * @return a new CNF
    */
   public Formula cnf(final Formula... clauses) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>(clauses.length);
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>(clauses.length);
     Collections.addAll(ops, clauses);
     return this.constructCNF(ops);
   }
@@ -484,7 +483,7 @@ public class FormulaFactory {
    * @return a new CNF
    */
   public Formula cnf(final Collection<? extends Formula> clauses) {
-    final LinkedHashSet<? extends Formula> ops = new LinkedHashSet<>(clauses);
+    final LinkedHashSet<? extends Formula> ops = new LinkedHashSet<Formula>(clauses);
     return this.constructCNF(ops);
   }
 
@@ -526,7 +525,7 @@ public class FormulaFactory {
    * @return a new disjunction
    */
   public Formula or(final Formula... operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>(operands.length);
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>(operands.length);
     Collections.addAll(ops, operands);
     return this.constructOr(ops);
   }
@@ -539,7 +538,7 @@ public class FormulaFactory {
    * @return a new disjunction
    */
   public Formula or(final Collection<? extends Formula> operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>(operands);
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>(operands);
     return this.constructOr(ops);
   }
 
@@ -613,7 +612,7 @@ public class FormulaFactory {
    * @return a new clause
    */
   public Formula clause(final Literal... literals) {
-    final LinkedHashSet<Literal> ops = new LinkedHashSet<>(literals.length);
+    final LinkedHashSet<Literal> ops = new LinkedHashSet<Literal>(literals.length);
     Collections.addAll(ops, literals);
     return this.constructClause(ops);
   }
@@ -627,7 +626,7 @@ public class FormulaFactory {
    * @return a new clause
    */
   public Formula clause(final Collection<? extends Literal> literals) {
-    final LinkedHashSet<Literal> ops = new LinkedHashSet<>(literals);
+    final LinkedHashSet<Literal> ops = new LinkedHashSet<Literal>(literals);
     return this.constructClause(ops);
   }
 
@@ -855,7 +854,7 @@ public class FormulaFactory {
    * @return a condensed array of operands
    */
   private LinkedHashSet<Formula> condenseOperandsOr(Collection<? extends Formula> operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>();
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>();
     this.cnfCheck = true;
     for (Formula form : operands)
       if (form.type() == OR) {
@@ -882,7 +881,7 @@ public class FormulaFactory {
    * @return a condensed array of operands
    */
   private LinkedHashSet<Formula> condenseOperandsAnd(Collection<? extends Formula> operands) {
-    final LinkedHashSet<Formula> ops = new LinkedHashSet<>();
+    final LinkedHashSet<Formula> ops = new LinkedHashSet<Formula>();
     this.cnfCheck = true;
     for (Formula form : operands)
       if (form.type() == AND) {
@@ -1033,7 +1032,7 @@ public class FormulaFactory {
   /**
    * Helper class for the operands of a pseudo-Boolean constraint.
    */
-  private static final class PBOperands {
+  static final class PBOperands {
     private final Literal[] literals;
     private final int[] coefficients;
     private final CType comparator;
@@ -1055,7 +1054,11 @@ public class FormulaFactory {
 
     @Override
     public int hashCode() {
-      return Objects.hash(this.rhs, this.comparator, Arrays.hashCode(coefficients), Arrays.hashCode(literals));
+      int result = Arrays.hashCode(literals);
+      result = 31 * result + Arrays.hashCode(coefficients);
+      result = 31 * result + (comparator != null ? comparator.hashCode() : 0);
+      result = 31 * result + rhs;
+      return result;
     }
 
     @Override
@@ -1258,37 +1261,6 @@ public class FormulaFactory {
       return this.positiveLiterals + this.negativeLiterals + this.negations + this.implications + this.equivalences
               + this.conjunctions2 + this.conjunctions3 + this.conjunctions4 + this.conjunctionsN + this.disjunctions2
               + this.disjunctions3 + this.disjunctions4 + this.disjunctionsN;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof FormulaFactoryStatistics)) return false;
-      FormulaFactoryStatistics that = (FormulaFactoryStatistics) o;
-      return positiveLiterals == that.positiveLiterals &&
-              negativeLiterals == that.negativeLiterals &&
-              negations == that.negations &&
-              implications == that.implications &&
-              equivalences == that.equivalences &&
-              conjunctions2 == that.conjunctions2 &&
-              conjunctions3 == that.conjunctions3 &&
-              conjunctions4 == that.conjunctions4 &&
-              conjunctionsN == that.conjunctionsN &&
-              disjunctions2 == that.disjunctions2 &&
-              disjunctions3 == that.disjunctions3 &&
-              disjunctions4 == that.disjunctions4 &&
-              disjunctionsN == that.disjunctionsN &&
-              ccCounter == that.ccCounter &&
-              pbCounter == that.pbCounter &&
-              cnfCounter == that.cnfCounter &&
-              Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(name, positiveLiterals, negativeLiterals, negations, implications, equivalences, conjunctions2,
-              conjunctions3, conjunctions4, conjunctionsN, disjunctions2, disjunctions3, disjunctions4, disjunctionsN,
-              ccCounter, pbCounter, cnfCounter);
     }
 
     @Override

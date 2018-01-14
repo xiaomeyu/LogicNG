@@ -189,8 +189,8 @@ public class PBConstraintTest {
 
   @Test
   public void testVariables() {
-    final SortedSet<Variable> lits1 = new TreeSet<>(Collections.singletonList(f.variable("a")));
-    final SortedSet<Variable> lits2 = new TreeSet<>(Arrays.asList(f.variable("a"), f.variable("b"), f.variable("c")));
+    final SortedSet<Variable> lits1 = new TreeSet<Variable>(Collections.singletonList(f.variable("a")));
+    final SortedSet<Variable> lits2 = new TreeSet<Variable>(Arrays.asList(f.variable("a"), f.variable("b"), f.variable("c")));
     Assert.assertEquals(lits1, pb1.variables());
     Assert.assertEquals(lits1, pb1.variables());
     Assert.assertEquals(lits2, pb2.variables());
@@ -204,9 +204,9 @@ public class PBConstraintTest {
 
   @Test
   public void testLiterals() {
-    final SortedSet<Variable> lits1 = new TreeSet<>(Collections.singletonList(f.variable("a")));
-    final SortedSet<Literal> lits2 = new TreeSet<>(Arrays.asList(f.variable("a"), f.literal("b", false), f.variable("c")));
-    final SortedSet<Variable> litsCC2 = new TreeSet<>(Arrays.asList(f.variable("a"), f.variable("b"), f.variable("c")));
+    final SortedSet<Variable> lits1 = new TreeSet<Variable>(Collections.singletonList(f.variable("a")));
+    final SortedSet<Literal> lits2 = new TreeSet<Literal>(Arrays.asList(f.variable("a"), f.literal("b", false), f.variable("c")));
+    final SortedSet<Variable> litsCC2 = new TreeSet<Variable>(Arrays.asList(f.variable("a"), f.variable("b"), f.variable("c")));
     Assert.assertEquals(lits1, pb1.literals());
     Assert.assertEquals(lits2, pb2.literals());
     Assert.assertEquals(lits1, cc1.literals());

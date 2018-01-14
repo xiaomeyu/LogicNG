@@ -75,11 +75,11 @@ lit returns [Formula f]
   |	simp        {$f = $simp.f;};
 
 conj returns [Formula f]
-@init{LinkedHashSet<Formula> literals = new LinkedHashSet<>(); }
+@init{LinkedHashSet<Formula> literals = new LinkedHashSet<Formula>(); }
 	:	a = lit {literals.add($a.f);} (AND b = lit {literals.add($b.f);})* {$f = f.and(literals);};
 
 disj returns [Formula f]
-@init{LinkedHashSet<Formula> conjunctions = new LinkedHashSet<>();}
+@init{LinkedHashSet<Formula> conjunctions = new LinkedHashSet<Formula>();}
   :	a = conj {conjunctions.add($a.f);} (OR b = conj {conjunctions.add($b.f);})* {$f = f.or(conjunctions);};
 
 impl returns [Formula f]
@@ -95,7 +95,7 @@ mul returns [Literal l, int c]
   | NUMBER MUL LITERAL {$l = ($LITERAL.text.startsWith("~") ? f.literal($LITERAL.text.substring(1, $LITERAL.text.length()), false) : f.literal($LITERAL.text, true)); $c = Integer.parseInt($NUMBER.text);};
 
 add returns [List<Literal> literals, List<Integer> coeffs]
-@init{$literals = new ArrayList<>(); $coeffs = new ArrayList<>();}
+@init{$literals = new ArrayList<Literal>(); $coeffs = new ArrayList<Integer>();}
   :	m1 = mul {$literals.add($m1.l); $coeffs.add($m1.c);} (ADD m2 = mul {$literals.add($m2.l); $coeffs.add($ADD.text.equals("+") ? $m2.c : -$m2.c);})*;
 
 

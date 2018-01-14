@@ -49,7 +49,7 @@ public final class SubNodeFunction implements FormulaFunction<LinkedHashSet<Form
     final Object cached = formula.functionCacheEntry(SUBFORMULAS);
     if (cached != null)
       return (LinkedHashSet<Formula>) cached;
-    LinkedHashSet<Formula> result = new LinkedHashSet<>();
+    LinkedHashSet<Formula> result = new LinkedHashSet<Formula>();
     for (final Formula op : formula)
       if (!result.contains(op))
         result.addAll(apply(op, cache));

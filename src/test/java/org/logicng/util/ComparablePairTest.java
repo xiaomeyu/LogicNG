@@ -38,9 +38,9 @@ import org.junit.Test;
  */
 public class ComparablePairTest {
 
-  private final ComparablePair<String, Integer> pair1 = new ComparablePair<>("abc", 12);
-  private final ComparablePair<String, Integer> pair2 = new ComparablePair<>("cde", 12);
-  private final ComparablePair<String, Integer> pair3 = new ComparablePair<>("cde", 42);
+  private final ComparablePair<String, Integer> pair1 = new ComparablePair<String, Integer>("abc", 12);
+  private final ComparablePair<String, Integer> pair2 = new ComparablePair<String, Integer>("cde", 12);
+  private final ComparablePair<String, Integer> pair3 = new ComparablePair<String, Integer>("cde", 42);
 
   @Test
   public void testGetters() {
@@ -55,13 +55,13 @@ public class ComparablePairTest {
   @Test
   public void testHashCode() {
     Assert.assertEquals(pair1.hashCode(), pair1.hashCode());
-    Assert.assertEquals(pair1.hashCode(), new ComparablePair<>("abc", 12).hashCode());
+    Assert.assertEquals(pair1.hashCode(), new ComparablePair<String, Integer>("abc", 12).hashCode());
   }
 
   @Test
   public void testEquals() {
     Assert.assertTrue(pair1.equals(pair1));
-    Assert.assertTrue(pair1.equals(new ComparablePair<>("abc", 12)));
+    Assert.assertTrue(pair1.equals(new ComparablePair<String, Integer>("abc", 12)));
     Assert.assertFalse(pair1.equals(pair2));
     Assert.assertFalse(pair2.equals(pair3));
     Assert.assertFalse(pair1.equals(pair3));

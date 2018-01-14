@@ -106,11 +106,11 @@ public final class CleaneLingSolver extends CleaneLingStyleSolver {
     this.touched = 0;
     this.distilled = 0;
     this.original = new LNGIntVector();
-    this.clauses = new LNGVector<>();
-    this.occs = new LNGVector<>();
+    this.clauses = new LNGVector<CLClause>();
+    this.occs = new LNGVector<CLOccs[]>();
     this.candsElim = new LNGLongPriorityQueue();
     this.candsBlock = new LNGLongPriorityQueue();
-    this.tostrengthen = new LNGVector<>();
+    this.tostrengthen = new LNGVector<Pair<CLClause, Integer>>();
     this.extension = new LNGIntVector();
     this.simplifier = Simplifier.NOSIMP;
   }
@@ -388,7 +388,7 @@ public final class CleaneLingSolver extends CleaneLingStyleSolver {
       int lit = -trail.get(next++);
       stats.steps++;
       LNGVector<CLWatch> ws = watches(lit);
-      LNGVector<CLWatch> newWS = new LNGVector<>();
+      LNGVector<CLWatch> newWS = new LNGVector<CLWatch>();
       int i;
       for (i = 0; conflict == null && i < ws.size(); i++) {
         CLWatch w = ws.get(i);
@@ -800,7 +800,7 @@ public final class CleaneLingSolver extends CleaneLingStyleSolver {
    */
   private void reduce() {
     stats.reductions++;
-    LNGVector<CLClause> candidates = new LNGVector<>();
+    LNGVector<CLClause> candidates = new LNGVector<CLClause>();
     for (final CLClause c : clauses)
       if (c.redundant() && !c.important() && !c.forcing())
         candidates.push(c);
@@ -811,7 +811,7 @@ public final class CleaneLingSolver extends CleaneLingStyleSolver {
     for (int idx = 1; idx <= maxvar(); idx++)
       for (int sign = -1; sign <= 1; sign += 2) {
         LNGVector<CLWatch> ws = watches(sign * idx);
-        LNGVector<CLWatch> newWs = new LNGVector<>(ws.size());
+        LNGVector<CLWatch> newWs = new LNGVector<CLWatch>(ws.size());
         for (final CLWatch w : ws)
           if (!w.clause().remove())
             newWs.push(w);
@@ -1057,7 +1057,7 @@ public final class CleaneLingSolver extends CleaneLingStyleSolver {
       if (count != 0)
         continue;
       if (negated != 0) {
-        tostrengthen.push(new Pair<>(d, negated));
+        tostrengthen.push(new Pair<CLClause, Integer>(d, negated));
         stats.backwardStrengthened++;
       } else {
         stats.backwardSubsumed++;

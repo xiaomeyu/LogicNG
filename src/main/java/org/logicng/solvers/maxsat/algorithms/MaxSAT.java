@@ -125,8 +125,8 @@ public abstract class MaxSAT {
    */
   protected MaxSAT(final MaxSATConfig config) {
     this.hardWeight = 0;
-    this.hardClauses = new LNGVector<>();
-    this.softClauses = new LNGVector<>();
+    this.hardClauses = new LNGVector<MSHardClause>();
+    this.softClauses = new LNGVector<MSSoftClause>();
     this.hardWeight = Integer.MAX_VALUE;
     this.problemType = ProblemType.UNWEIGHTED;
     this.nbVars = 0;
@@ -373,8 +373,8 @@ public abstract class MaxSAT {
   public boolean isBMO(boolean cache) {
     assert orderWeights.size() == 0;
     boolean bmo = true;
-    final SortedSet<Integer> partitionWeights = new TreeSet<>();
-    final SortedMap<Integer, Integer> nbPartitionWeights = new TreeMap<>();
+    final SortedSet<Integer> partitionWeights = new TreeSet<Integer>();
+    final SortedMap<Integer, Integer> nbPartitionWeights = new TreeMap<Integer, Integer>();
     for (int i = 0; i < nSoft(); i++) {
       final int weight = softClauses.get(i).weight();
       partitionWeights.add(weight);

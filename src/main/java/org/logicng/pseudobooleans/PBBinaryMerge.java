@@ -87,7 +87,7 @@ final class PBBinaryMerge implements PBEncoding {
 
   @Override
   public List<Formula> encode(final LNGVector<Literal> lts, final LNGIntVector cffs, int rhs, final List<Formula> formula) {
-    final LNGVector<Literal> lits = new LNGVector<>(lts.size());
+    final LNGVector<Literal> lits = new LNGVector<Literal>(lts.size());
     for (final Literal lit : lts)
       lits.push(lit);
     final LNGIntVector coeffs = new LNGIntVector(cffs);
@@ -155,7 +155,7 @@ final class PBBinaryMerge implements PBEncoding {
 
     final Literal true_lit = f.newPBVariable();
     formula.add(true_lit);
-    final LNGVector<LNGVector<Literal>> buckets = new LNGVector<>();
+    final LNGVector<LNGVector<Literal>> buckets = new LNGVector<LNGVector<Literal>>();
     int bit = 1;
     for (int i = 0; i <= p; i++) {
       buckets.push(new LNGVector<Literal>());
@@ -171,14 +171,14 @@ final class PBBinaryMerge implements PBEncoding {
       }
       bit = bit << 1;
     }
-    LNGVector<LNGVector<Literal>> bucket_card = new LNGVector<>(p + 1);
-    LNGVector<LNGVector<Literal>> bucket_merge = new LNGVector<>(p + 1);
+    LNGVector<LNGVector<Literal>> bucket_card = new LNGVector<LNGVector<Literal>>(p + 1);
+    LNGVector<LNGVector<Literal>> bucket_merge = new LNGVector<LNGVector<Literal>>(p + 1);
     for (int i = 0; i < p + 1; i++) {
       bucket_card.push(new LNGVector<Literal>());
       bucket_merge.push(new LNGVector<Literal>());
     }
     assert bucket_card.size() == buckets.size();
-    final LNGVector<Literal> carries = new LNGVector<>();
+    final LNGVector<Literal> carries = new LNGVector<Literal>();
     final EncodingResult tempResul = EncodingResult.resultForFormula(f); // TODO temporary solution
     for (int i = 0; i < buckets.size(); i++) {
       int k = (int) Math.ceil(new_less_then / Math.pow(2, i));
@@ -235,15 +235,15 @@ final class PBBinaryMerge implements PBEncoding {
     } else {
       for (int i = 0; i < x.size(); i++)
         u_x.push(f.newPBVariable());
-      final LNGVector<Literal> x_1 = new LNGVector<>();
-      final LNGVector<Literal> x_2 = new LNGVector<>();
+      final LNGVector<Literal> x_1 = new LNGVector<Literal>();
+      final LNGVector<Literal> x_2 = new LNGVector<Literal>();
       int i = 0;
       for (; i < x.size() / 2; i++)
         x_1.push(x.get(i));
       for (; i < x.size(); i++)
         x_2.push(x.get(i));
-      final LNGVector<Literal> u_x_1 = new LNGVector<>();
-      final LNGVector<Literal> u_x_2 = new LNGVector<>();
+      final LNGVector<Literal> u_x_1 = new LNGVector<Literal>();
+      final LNGVector<Literal> u_x_2 = new LNGVector<Literal>();
       totalizer(x_1, u_x_1, formula);
       totalizer(x_2, u_x_2, formula);
       unary_adder(u_x_1, u_x_2, u_x, formula);

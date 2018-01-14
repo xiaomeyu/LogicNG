@@ -187,8 +187,8 @@ public final class MaxSATSolver {
    */
   public void reset() {
     this.result = UNDEF;
-    this.var2index = new TreeMap<>();
-    this.index2var = new TreeMap<>();
+    this.var2index = new TreeMap<Variable, Integer>();
+    this.index2var = new TreeMap<Integer, Variable>();
     switch (this.algorithm) {
       case WBO:
         this.solver = new WBO(this.configuration);

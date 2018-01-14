@@ -43,7 +43,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 
 /**
  * Unit tests for {@link org.logicng.io.writers.FormulaWriter} and {@link org.logicng.io.readers.FormulaReader}.
@@ -63,15 +62,18 @@ public class FormulaWriterReaderTest {
     final Formula p3 = FormulaReader.readPropositionalFormula(file, f);
     Assert.assertEquals(p1, p2);
     Assert.assertEquals(p1, p3);
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       int count = 0;
       while (reader.ready()) {
         reader.readLine();
         count++;
       }
       Assert.assertEquals(1, count);
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
 
   @Test
@@ -83,15 +85,18 @@ public class FormulaWriterReaderTest {
     FormulaWriter.write(fileName, p1, true);
     final Formula p2 = FormulaReader.readPropositionalFormula(fileName, f);
     Assert.assertEquals(p1, p2);
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       int count = 0;
       while (reader.ready()) {
         reader.readLine();
         count++;
       }
       Assert.assertEquals(3, count);
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
 
   @Test
@@ -105,15 +110,18 @@ public class FormulaWriterReaderTest {
     final Formula p3 = FormulaReader.readPseudoBooleanFormula(file, f);
     Assert.assertEquals(p1, p2);
     Assert.assertEquals(p1, p3);
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       int count = 0;
       while (reader.ready()) {
         reader.readLine();
         count++;
       }
       Assert.assertEquals(1, count);
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
 
   @Test
@@ -125,15 +133,18 @@ public class FormulaWriterReaderTest {
     FormulaWriter.write(fileName, p1, true);
     final Formula p2 = FormulaReader.readPseudoBooleanFormula(fileName, f);
     Assert.assertEquals(p1, p2);
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       int count = 0;
       while (reader.ready()) {
         reader.readLine();
         count++;
       }
       Assert.assertEquals(5, count);
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
 
   @Test
@@ -143,10 +154,13 @@ public class FormulaWriterReaderTest {
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
     FormulaWriter.write(fileName, p1, false, new UTF8StringRepresentation());
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       Assert.assertEquals("A ∧ B ∧ ¬(C ∨ (D ⇒ ¬E))", reader.readLine());
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
 
   @Test
@@ -156,12 +170,14 @@ public class FormulaWriterReaderTest {
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
     FormulaWriter.write(fileName, p1, true, new UTF8StringRepresentation());
-    try (final BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+    final BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    try {
       Assert.assertEquals("A", reader.readLine());
       Assert.assertEquals("B", reader.readLine());
       Assert.assertEquals("¬(C ∨ (D ⇒ ¬E))", reader.readLine());
+    } finally {
+      reader.close();
+      file.delete();
     }
-    Files.deleteIfExists(file.toPath());
   }
-
 }

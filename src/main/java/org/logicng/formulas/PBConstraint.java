@@ -263,7 +263,7 @@ public final class PBConstraint extends Formula {
    * @return the normalized constraint
    */
   public Formula normalize() {
-    final LNGVector<Literal> normPs = new LNGVector<>(this.literals.length);
+    final LNGVector<Literal> normPs = new LNGVector<Literal>(this.literals.length);
     final LNGIntVector normCs = new LNGIntVector(this.literals.length);
     int normRhs;
     switch (this.comparator) {
@@ -324,25 +324,25 @@ public final class PBConstraint extends Formula {
     }
     ps.removeElements(ps.size() - newSize);
     cs.removeElements(cs.size() - newSize);
-    final SortedMap<Literal, Pair<Integer, Integer>> var2consts = new TreeMap<>();
+    final SortedMap<Literal, Pair<Integer, Integer>> var2consts = new TreeMap<Literal, Pair<Integer, Integer>>();
     for (int i = 0; i < ps.size(); i++) {
       final Variable x = ps.get(i).variable();
       Pair<Integer, Integer> consts = var2consts.get(x);
       if (consts == null)
-        consts = new Pair<>(0, 0);
+        consts = new Pair<Integer, Integer>(0, 0);
       if (!ps.get(i).phase())
-        var2consts.put(x, new Pair<>(consts.first() + cs.get(i), consts.second()));
+        var2consts.put(x, new Pair<Integer, Integer>(consts.first() + cs.get(i), consts.second()));
       else
-        var2consts.put(x, new Pair<>(consts.first(), consts.second() + cs.get(i)));
+        var2consts.put(x, new Pair<Integer, Integer>(consts.first(), consts.second() + cs.get(i)));
     }
-    final LNGVector<Pair<Integer, Literal>> csps = new LNGVector<>(var2consts.size());
+    final LNGVector<Pair<Integer, Literal>> csps = new LNGVector<Pair<Integer, Literal>>(var2consts.size());
     for (final Map.Entry<Literal, Pair<Integer, Integer>> all : var2consts.entrySet()) {
       if (all.getValue().first() < all.getValue().second()) {
         c -= all.getValue().first();
-        csps.push(new Pair<>(all.getValue().second() - all.getValue().first(), all.getKey()));
+        csps.push(new Pair<Integer, Literal>(all.getValue().second() - all.getValue().first(), all.getKey()));
       } else {
         c -= all.getValue().second();
-        csps.push(new Pair<>(all.getValue().first() - all.getValue().second(), all.getKey().negate()));
+        csps.push(new Pair<Integer, Literal>(all.getValue().first() - all.getValue().second(), all.getKey().negate()));
       }
     }
     int sum = 0;
@@ -413,7 +413,7 @@ public final class PBConstraint extends Formula {
   @Override
   public SortedSet<Variable> variables() {
     if (this.variables == null) {
-      this.variables = new TreeSet<>();
+      this.variables = new TreeSet<Variable>();
       for (final Literal lit : this.literals)
         this.variables.add(lit.variable());
       this.variables = Collections.unmodifiableSortedSet(this.variables);
@@ -423,7 +423,7 @@ public final class PBConstraint extends Formula {
 
   @Override
   public SortedSet<Literal> literals() {
-    final SortedSet<Literal> lits = new TreeSet<>();
+    final SortedSet<Literal> lits = new TreeSet<Literal>();
     Collections.addAll(lits, this.literals);
     return Collections.unmodifiableSortedSet(lits);
   }
@@ -444,8 +444,8 @@ public final class PBConstraint extends Formula {
 
   @Override
   public Formula restrict(final Assignment assignment) {
-    final List<Literal> newLits = new LinkedList<>();
-    final List<Integer> newCoeffs = new LinkedList<>();
+    final List<Literal> newLits = new LinkedList<Literal>();
+    final List<Integer> newCoeffs = new LinkedList<Integer>();
     int lhsFixed = 0;
     int minValue = 0;
     int maxValue = 0;
@@ -492,8 +492,8 @@ public final class PBConstraint extends Formula {
 
   @Override
   public Formula substitute(final Substitution substitution) {
-    final List<Literal> newLits = new LinkedList<>();
-    final List<Integer> newCoeffs = new LinkedList<>();
+    final List<Literal> newLits = new LinkedList<Literal>();
+    final List<Integer> newCoeffs = new LinkedList<Integer>();
     int lhsFixed = 0;
     for (int i = 0; i < this.literals.length; i++) {
       final Formula subst = substitution.getSubstitution(this.literals[i].variable());

@@ -59,9 +59,9 @@ public class PigeonHoleGenerator {
   private Formula placeInSomeHole(int n, String prefix) {
     if (n == 1)
       return f.and(f.variable(prefix + "1"), f.variable(prefix + "2"));
-    List<Formula> ors = new LinkedList<>();
+    List<Formula> ors = new LinkedList<Formula>();
     for (int i = 1; i <= n + 1; i++) {
-      List<Literal> orOps = new LinkedList<>();
+      List<Literal> orOps = new LinkedList<Literal>();
       for (int j = 1; j <= n; j++)
         orOps.add(f.variable(prefix + (n * (i - 1) + j)));
       ors.add(f.or(orOps));
@@ -72,7 +72,7 @@ public class PigeonHoleGenerator {
   private Formula onlyOnePigeonInHole(int n, String prefix) {
     if (n == 1)
       return f.or(f.literal(prefix + "1", false), f.literal(prefix + "2", false));
-    List<Formula> ors = new LinkedList<>();
+    List<Formula> ors = new LinkedList<Formula>();
     for (int j = 1; j <= n; j++)
       for (int i = 1; i <= n; i++)
         for (int k = i + 1; k <= n + 1; k++)

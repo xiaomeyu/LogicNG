@@ -43,7 +43,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -211,7 +210,7 @@ public final class ImmutableFormulaList implements Iterable<Formula> {
    */
   public SortedSet<Variable> variables() {
     if (this.variables == null) {
-      this.variables = new TreeSet<>();
+      this.variables = new TreeSet<Variable>();
       for (final Formula f : this.formulas)
         this.variables.addAll(f.variables());
     }
@@ -223,7 +222,7 @@ public final class ImmutableFormulaList implements Iterable<Formula> {
    * @return all literals occurring in this formula list
    */
   public SortedSet<Literal> literals() {
-    final SortedSet<Literal> literals = new TreeSet<>();
+    final SortedSet<Literal> literals = new TreeSet<Literal>();
     for (final Formula f : this.formulas)
       literals.addAll(f.literals());
     return literals;
@@ -235,7 +234,7 @@ public final class ImmutableFormulaList implements Iterable<Formula> {
    */
   public SortedMap<Variable, Integer> varProfile() {
     final VariableProfileFunction variableProfileFunction = new VariableProfileFunction();
-    final SortedMap<Variable, Integer> profile = new TreeMap<>();
+    final SortedMap<Variable, Integer> profile = new TreeMap<Variable, Integer>();
     for (final Formula f : this.formulas)
       for (final Map.Entry<Variable, Integer> entry : f.apply(variableProfileFunction).entrySet()) {
         final Integer currentCount = profile.get(entry.getKey());
@@ -253,7 +252,7 @@ public final class ImmutableFormulaList implements Iterable<Formula> {
    */
   public SortedMap<Literal, Integer> litProfile() {
     final LiteralProfileFunction literalProfileFunction = new LiteralProfileFunction();
-    final SortedMap<Literal, Integer> profile = new TreeMap<>();
+    final SortedMap<Literal, Integer> profile = new TreeMap<Literal, Integer>();
     for (final Formula f : this.formulas)
       for (final Map.Entry<Literal, Integer> entry : f.apply(literalProfileFunction).entrySet()) {
         final Integer currentCount = profile.get(entry.getKey());
@@ -295,8 +294,11 @@ public final class ImmutableFormulaList implements Iterable<Formula> {
 
   @Override
   public int hashCode() {
-    return Objects.hash(this.operator, Arrays.hashCode(this.formulas));
+    int result = operator != null ? operator.hashCode() : 0;
+    result = 31 * result + Arrays.hashCode(formulas);
+    return result;
   }
+
 
   @Override
   public boolean equals(final Object other) {

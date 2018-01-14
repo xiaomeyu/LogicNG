@@ -33,7 +33,6 @@ import org.logicng.formulas.FType;
 import org.logicng.formulas.Formula;
 
 import java.util.Collection;
-import java.util.Objects;
 
 /**
  * A proposition in LogicNG.  A proposition is a collection of formulas with an additional textual description.
@@ -108,19 +107,22 @@ public final class StandardProposition extends Proposition {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(this.formulas, this.description);
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (!(o instanceof StandardProposition))
+      return false;
+    StandardProposition that = (StandardProposition) o;
+    if (formulas != null ? !formulas.equals(that.formulas) : that.formulas != null)
+      return false;
+    return description != null ? description.equals(that.description) : that.description == null;
   }
 
   @Override
-  public boolean equals(final Object other) {
-    if (this == other)
-      return true;
-    if (other instanceof StandardProposition) {
-      final StandardProposition o = (StandardProposition) other;
-      return Objects.equals(this.formulas, o.formulas) && Objects.equals(this.description, o.description);
-    }
-    return false;
+  public int hashCode() {
+    int result = formulas != null ? formulas.hashCode() : 0;
+    result = 31 * result + (description != null ? description.hashCode() : 0);
+    return result;
   }
 
   @Override

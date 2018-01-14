@@ -172,7 +172,7 @@ public class SubformulaTest {
   public void subformulasTest() throws ParserException {
     PropositionalParser p = new PropositionalParser(F.f);
     final Formula f1 = p.parse("((a & ~b & c) | (d & (~e | c))) & (a => (~x | y) & (x | ~z))");
-    final LinkedHashSet<Formula> expected = new LinkedHashSet<>();
+    final LinkedHashSet<Formula> expected = new LinkedHashSet<Formula>();
     expected.add(p.parse("a"));
     expected.add(p.parse("~b"));
     expected.add(p.parse("c"));

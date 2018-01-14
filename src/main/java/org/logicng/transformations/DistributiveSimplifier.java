@@ -82,10 +82,10 @@ public class DistributiveSimplifier implements FormulaTransformation {
     final Formula result;
     final FType outerType = formula.type();
     final FType innerType = outerType == FType.OR ? FType.AND : FType.OR;
-    final Set<Formula> operands = new LinkedHashSet<>();
+    final Set<Formula> operands = new LinkedHashSet<Formula>();
     for (Formula op : formula)
       operands.add(this.apply(op, cache));
-    final Map<Formula, Set<Formula>> part2Operands = new LinkedHashMap<>();
+    final Map<Formula, Set<Formula>> part2Operands = new LinkedHashMap<Formula, Set<Formula>>();
     Formula mostCommon = null;
     int mostCommonAmount = 0;
     for (Formula op : operands)
@@ -93,7 +93,7 @@ public class DistributiveSimplifier implements FormulaTransformation {
         for (Formula part : op) {
           Set<Formula> partOperands = part2Operands.get(part);
           if (partOperands == null) {
-            partOperands = new LinkedHashSet<>();
+            partOperands = new LinkedHashSet<Formula>();
             part2Operands.put(part, partOperands);
           }
           partOperands.add(op);
@@ -107,9 +107,9 @@ public class DistributiveSimplifier implements FormulaTransformation {
       return result;
     }
     operands.removeAll(part2Operands.get(mostCommon));
-    final Set<Formula> relevantFormulas = new LinkedHashSet<>();
+    final Set<Formula> relevantFormulas = new LinkedHashSet<Formula>();
     for (Formula preRelevantFormula : part2Operands.get(mostCommon)) {
-      final Set<Formula> relevantParts = new LinkedHashSet<>();
+      final Set<Formula> relevantParts = new LinkedHashSet<Formula>();
       for (Formula part : preRelevantFormula)
         if (!part.equals(mostCommon))
           relevantParts.add(part);

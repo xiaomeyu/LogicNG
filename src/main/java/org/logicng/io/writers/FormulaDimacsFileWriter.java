@@ -73,15 +73,15 @@ public final class FormulaDimacsFileWriter {
    */
   public static void write(final String fileName, Formula formula, boolean writeMapping) throws IOException {
     File file = new File(fileName.endsWith(".cnf") ? fileName : fileName + ".cnf");
-    SortedMap<Variable, Long> var2id = new TreeMap<>();
+    SortedMap<Variable, Long> var2id = new TreeMap<Variable, Long>();
     long i = 1;
-    for (Variable var : new TreeSet<>(formula.variables())) {
+    for (Variable var : new TreeSet<Variable>(formula.variables())) {
       var2id.put(var, i++);
     }
     if (!formula.holds(CNF_PREDICATE)) {
       throw new IllegalArgumentException("Cannot write a non-CNF formula to dimacs.  Convert to CNF first.");
     }
-    List<Formula> parts = new ArrayList<>();
+    List<Formula> parts = new ArrayList<Formula>();
     if (formula.type().equals(FType.LITERAL)) {
       parts.add(formula);
     } else {
@@ -102,9 +102,11 @@ public final class FormulaDimacsFileWriter {
     if (formula.type().equals(FType.FALSE)) {
       sb.append("0\n");
     }
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
-      writer.flush();
+    } finally {
+      writer.close();
     }
     if (writeMapping) {
       String mappingFileName = (fileName.endsWith(".cnf") ? fileName.substring(0, fileName.length() - 4) : fileName) + ".map";
@@ -117,9 +119,11 @@ public final class FormulaDimacsFileWriter {
     for (Map.Entry<Variable, Long> entry : var2id.entrySet()) {
       sb.append(entry.getKey()).append(";").append(entry.getValue()).append("\n");
     }
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mappingFile), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mappingFile), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
-      writer.flush();
+    } finally {
+      writer.close();
     }
   }
 }

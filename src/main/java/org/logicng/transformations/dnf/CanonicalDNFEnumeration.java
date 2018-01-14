@@ -53,7 +53,7 @@ public final class CanonicalDNFEnumeration implements FormulaTransformation {
     final List<Assignment> enumeration = solver.enumerateAllModels();
     if (enumeration.isEmpty())
       return f.falsum();
-    final List<Formula> ops = new LinkedList<>();
+    final List<Formula> ops = new LinkedList<Formula>();
     for (final Assignment a : enumeration)
       ops.add(a.formula(f));
     return f.or(ops);

@@ -67,11 +67,11 @@ lit returns [Formula f]
   |	simp        {$f = $simp.f;};
 
 conj returns [Formula f]
-@init{LinkedHashSet<Formula> literals = new LinkedHashSet<>(); }
+@init{LinkedHashSet<Formula> literals = new LinkedHashSet<Formula>(); }
 	:	a = lit {literals.add($a.f);} (AND b = lit {literals.add($b.f);})* {$f = f.and(literals);};
 
 disj returns [Formula f]
-@init{LinkedHashSet<Formula> conjunctions = new LinkedHashSet<>();}
+@init{LinkedHashSet<Formula> conjunctions = new LinkedHashSet<Formula>();}
   :	a = conj {conjunctions.add($a.f);} (OR b = conj {conjunctions.add($b.f);})* {$f = f.or(conjunctions);};
 
 impl returns [Formula f]

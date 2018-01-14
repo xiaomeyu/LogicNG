@@ -67,7 +67,7 @@ public class ConnectedComponentsComputerTest {
       }
       int equals = 0;
       for (Set<Node<Long>> cc2 : ccs) {
-        Set<Node<Long>> cut = new HashSet<>(cc2);
+        Set<Node<Long>> cut = new HashSet<Node<Long>>(cc2);
         cut.retainAll(cc);
         if (cut.size() == cc.size()) {
           equals++;
@@ -101,7 +101,7 @@ public class ConnectedComponentsComputerTest {
       }
       int equals = 0;
       for (Set<Node<Long>> cc2 : ccs) {
-        Set<Node<Long>> cut = new HashSet<>(cc2);
+        Set<Node<Long>> cut = new HashSet<Node<Long>>(cc2);
         cut.retainAll(cc);
         if (cut.size() == cc.size()) {
           equals++;

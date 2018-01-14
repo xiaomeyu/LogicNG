@@ -64,7 +64,7 @@ public class BronKerbosch<T extends Comparable<T>> {
         return o1.content().compareTo(o2.content());
       }
     };
-    this.cliques = new HashSet<>();
+    this.cliques = new HashSet<SortedSet<Node<T>>>();
   }
 
   /**
@@ -73,9 +73,9 @@ public class BronKerbosch<T extends Comparable<T>> {
    */
   public Set<SortedSet<Node<T>>> compute() {
     cliques.clear();
-    SortedSet<Node<T>> p = new TreeSet<>(this.nodeComparator);
+    SortedSet<Node<T>> p = new TreeSet<Node<T>>(this.nodeComparator);
     p.addAll(g.nodes());
-    bk(new TreeSet<>(this.nodeComparator), p, new TreeSet<>(this.nodeComparator));
+    bk(new TreeSet<Node<T>>(this.nodeComparator), p, new TreeSet<Node<T>>(this.nodeComparator));
     return cliques;
   }
 
@@ -84,19 +84,19 @@ public class BronKerbosch<T extends Comparable<T>> {
       cliques.add(r);
       return;
     }
-    final SortedSet<Node<T>> pvx = new TreeSet<>(new NodeNeighbourComparator());
+    final SortedSet<Node<T>> pvx = new TreeSet<Node<T>>(new NodeNeighbourComparator());
     pvx.addAll(p);
     pvx.addAll(x);
     final Node<T> u = pvx.last();
-    final SortedSet<Node<T>> pwnu = new TreeSet<>(this.nodeComparator);
+    final SortedSet<Node<T>> pwnu = new TreeSet<Node<T>>(this.nodeComparator);
     pwnu.addAll(p);
     pwnu.removeAll(u.neighbours());
     for (Node<T> v : pwnu) {
-      final SortedSet<Node<T>> nr = new TreeSet<>(this.nodeComparator);
+      final SortedSet<Node<T>> nr = new TreeSet<Node<T>>(this.nodeComparator);
       nr.addAll(r);
       nr.add(v);
-      final SortedSet<Node<T>> np = new TreeSet<>(this.nodeComparator);
-      final SortedSet<Node<T>> nx = new TreeSet<>(this.nodeComparator);
+      final SortedSet<Node<T>> np = new TreeSet<Node<T>>(this.nodeComparator);
+      final SortedSet<Node<T>> nx = new TreeSet<Node<T>>(this.nodeComparator);
       for (Node<T> neigh : v.neighbours()) {
         if (p.contains(neigh))
           np.add(neigh);
@@ -114,9 +114,9 @@ public class BronKerbosch<T extends Comparable<T>> {
    * @return the maximal cliques
    */
   public List<List<T>> getCliquesAsTLists() {
-    final List<List<T>> result = new ArrayList<>();
+    final List<List<T>> result = new ArrayList<List<T>>();
     for (Set<Node<T>> clique : cliques) {
-      final List<T> curList = new ArrayList<>();
+      final List<T> curList = new ArrayList<T>();
       for (Node<T> node : clique)
         curList.add(node.content());
       result.add(curList);

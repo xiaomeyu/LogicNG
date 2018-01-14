@@ -137,7 +137,7 @@ public class ExtendedFormulaFactoryTest {
   }
 
   private List<Formula> initializeFormulaFactoryWithFormulas(FormulaFactory f) {
-    List<Formula> result = new ArrayList<>();
+    List<Formula> result = new ArrayList<Formula>();
 
     // Literals
     Variable A = f.variable("a");

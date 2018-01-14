@@ -67,19 +67,19 @@ public final class GraphDimacsFileWriter {
    */
   public static <T> void write(final String fileName, Graph<T> g, boolean writeMapping) throws IOException {
     File file = new File(fileName.endsWith(".col") ? fileName : fileName + ".col");
-    Map<Node<T>, Long> node2id = new LinkedHashMap<>();
+    Map<Node<T>, Long> node2id = new LinkedHashMap<Node<T>, Long>();
     long i = 1;
     for (Node<T> node : g.nodes()) {
       node2id.put(node, i++);
     }
 
     StringBuilder sb = new StringBuilder("p edge ");
-    Set<Pair<Node<T>, Node<T>>> edges = new LinkedHashSet<>();
-    Set<Node<T>> doneNodes = new LinkedHashSet<>();
+    Set<Pair<Node<T>, Node<T>>> edges = new LinkedHashSet<Pair<Node<T>, Node<T>>>();
+    Set<Node<T>> doneNodes = new LinkedHashSet<Node<T>>();
     for (Node<T> d : g.nodes()) {
       for (Node<T> n : d.neighbours()) {
         if (!doneNodes.contains(n)) {
-          edges.add(new Pair<>(d, n));
+          edges.add(new Pair<Node<T>, Node<T>>(d, n));
         }
       }
       doneNodes.add(d);
@@ -90,10 +90,14 @@ public final class GraphDimacsFileWriter {
       sb.append("e ").append(node2id.get(edge.first())).append(" ").append(node2id.get(edge.second())).append("\n");
     }
 
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
       writer.flush();
+    } finally {
+      writer.close();
     }
+
     if (writeMapping) {
       String mappingFileName = (fileName.endsWith(".col") ? fileName.substring(0, fileName.length() - 4) : fileName) + ".map";
       writeMapping(new File(mappingFileName), node2id);
@@ -105,9 +109,12 @@ public final class GraphDimacsFileWriter {
     for (Map.Entry<Node<T>, Long> entry : node2id.entrySet()) {
       sb.append(entry.getKey().content()).append(";").append(entry.getValue()).append("\n");
     }
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mappingFile), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(mappingFile), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
       writer.flush();
+    } finally {
+      writer.close();
     }
   }
 }

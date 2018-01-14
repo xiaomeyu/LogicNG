@@ -47,7 +47,7 @@ public class Substitution {
    * Constructs a new empty substitution.
    */
   public Substitution() {
-    this.subst = new HashMap<>();
+    this.subst = new HashMap<Variable, Formula>();
   }
 
   /**

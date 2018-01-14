@@ -51,7 +51,7 @@ public class Node<T> {
   Node(final T content, final Graph<T> graph) {
     this.content = content;
     this.graph = graph;
-    this.neighbours = new LinkedHashSet<>();
+    this.neighbours = new LinkedHashSet<Node<T>>();
   }
 
   /**
@@ -88,7 +88,7 @@ public class Node<T> {
    * @return the neighbours of the node
    */
   public Set<Node<T>> neighbours() {
-    return new LinkedHashSet<>(neighbours);
+    return new LinkedHashSet<Node<T>>(neighbours);
   }
 
   /**

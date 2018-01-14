@@ -47,12 +47,12 @@ public class PlainInsertionBasedMUS extends MUSAlgorithm {
 
   @Override
   public <T extends Proposition> UNSATCore<T> computeMUS(List<T> propositions, FormulaFactory f, MUSConfig config) {
-    List<T> currentFormula = new ArrayList<>(propositions.size());
+    List<T> currentFormula = new ArrayList<T>(propositions.size());
     currentFormula.addAll(propositions);
-    final List<T> mus = new ArrayList<>(propositions.size());
+    final List<T> mus = new ArrayList<T>(propositions.size());
     final MiniSat solver = MiniSat.miniSat(f);
     while (!currentFormula.isEmpty()) {
-      final List<T> currentSubset = new ArrayList<>(propositions.size());
+      final List<T> currentSubset = new ArrayList<T>(propositions.size());
       T transitionProposition = null;
       solver.reset();
       for (final Proposition p : mus)
@@ -73,6 +73,6 @@ public class PlainInsertionBasedMUS extends MUSAlgorithm {
         mus.add(transitionProposition);
       }
     }
-    return new UNSATCore<>(mus, true);
+    return new UNSATCore<T>(mus, true);
   }
 }

@@ -124,7 +124,7 @@ public final class LinearSU extends MaxSAT {
     int currentWeight = orderWeights.get(0);
     int minWeight = orderWeights.get(orderWeights.size() - 1);
     int posWeight = 0;
-    LNGVector<LNGIntVector> functions = new LNGVector<>();
+    LNGVector<LNGIntVector> functions = new LNGVector<LNGIntVector>();
     LNGIntVector weights = new LNGIntVector();
     this.solver = this.rebuildBMO(functions, weights, currentWeight);
     int localCost = 0;

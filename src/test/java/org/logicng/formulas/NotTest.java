@@ -68,23 +68,23 @@ public class NotTest {
   @Test
   public void testVariables() {
     Assert.assertEquals(2, F.NOT1.variables().size());
-    SortedSet<Variable> lits = new TreeSet<>(Arrays.asList(F.A, F.B));
+    SortedSet<Variable> lits = new TreeSet<Variable>(Arrays.asList(F.A, F.B));
     Assert.assertEquals(lits, F.NOT1.variables());
 
     Assert.assertEquals(2, F.NOT2.variables().size());
-    lits = new TreeSet<>(Arrays.asList(F.X, F.Y));
+    lits = new TreeSet<Variable>(Arrays.asList(F.X, F.Y));
     Assert.assertEquals(lits, F.NOT2.variables());
   }
 
   @Test
   public void testLiterals() {
     Assert.assertEquals(2, F.NOT1.literals().size());
-    SortedSet<? extends Literal> lits = new TreeSet<>(Arrays.asList(F.A, F.B));
+    SortedSet<? extends Literal> lits = new TreeSet<Variable>(Arrays.asList(F.A, F.B));
     Assert.assertEquals(lits, F.NOT1.literals());
 
     Formula not = F.f.not(F.f.and(F.A, F.NB, F.f.implication(F.B, F.NA)));
     Assert.assertEquals(4, not.literals().size());
-    lits = new TreeSet<>(Arrays.asList(F.A, F.NA, F.B, F.NB));
+    lits = new TreeSet<Literal>(Arrays.asList(F.A, F.NA, F.B, F.NB));
     Assert.assertEquals(lits, not.literals());
   }
 

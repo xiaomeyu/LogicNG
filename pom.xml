@@ -25,12 +25,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.logicng</groupId>
-  <artifactId>logicng</artifactId>
+  <artifactId>logicng-j6</artifactId>
   <version>1.3</version>
   <packaging>jar</packaging>
 
   <name>LogicNG</name>
-  <description>The Next Generation Logic Library</description>
+  <description>The Next Generation Logic Library (for Java 6)</description>
   <url>http://www.logicng.org</url>
 
   <licenses>
@@ -62,8 +62,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
 
     <sonar.language>java</sonar.language>
     <sonar.exclusions>**/LogicNGPropositional*.java,**/LogicNGPseudoBoolean*.java</sonar.exclusions>

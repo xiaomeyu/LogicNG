@@ -176,7 +176,7 @@ public final class EncodingResult {
    * @return the clause
    */
   private Formula vec2clause(final LNGVector<Literal> literals) {
-    final List<Literal> lits = new ArrayList<>(literals.size());
+    final List<Literal> lits = new ArrayList<Literal>(literals.size());
     for (final Literal l : literals)
       lits.add(l);
     return this.f.clause(lits);
@@ -202,7 +202,7 @@ public final class EncodingResult {
    * Resets the result.
    */
   public void reset() {
-    this.result = new ArrayList<>();
+    this.result = new ArrayList<Formula>();
   }
 
   /**

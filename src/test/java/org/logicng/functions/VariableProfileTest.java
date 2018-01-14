@@ -83,15 +83,15 @@ public class VariableProfileTest {
 
   @Test
   public void testConstants() {
-    Assert.assertEquals(new HashMap<>(), f.verum().apply(varProfile, true));
-    Assert.assertEquals(new HashMap<>(), f.verum().apply(varProfile, false));
-    Assert.assertEquals(new HashMap<>(), f.falsum().apply(varProfile, true));
-    Assert.assertEquals(new HashMap<>(), f.falsum().apply(varProfile, false));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.verum().apply(varProfile, true));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.verum().apply(varProfile, false));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.falsum().apply(varProfile, true));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.falsum().apply(varProfile, false));
   }
 
   @Test
   public void testLiterals() {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 1);
     Assert.assertEquals(expected, f.literal("a", true).apply(varProfile, true));
     Assert.assertEquals(expected, f.literal("a", true).apply(varProfile, false));
@@ -101,9 +101,9 @@ public class VariableProfileTest {
 
   @Test
   public void testPBC() {
-    final Map<Literal, Integer> exp1 = new HashMap<>();
+    final Map<Literal, Integer> exp1 = new HashMap<Literal, Integer>();
     exp1.put(f.variable("a"), 1);
-    final Map<Literal, Integer> exp2 = new HashMap<>();
+    final Map<Literal, Integer> exp2 = new HashMap<Literal, Integer>();
     exp2.put(f.variable("a"), 1);
     exp2.put(f2.variable("b"), 1);
     exp2.put(f.variable("c"), 1);
@@ -128,7 +128,7 @@ public class VariableProfileTest {
 
   @Test
   public void testNot() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 1);
     expected.put(f2.variable("b"), 2);
     expected.put(f2.variable("c"), 3);
@@ -140,7 +140,7 @@ public class VariableProfileTest {
 
   @Test
   public void testBinaryOperator() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 1);
     expected.put(f2.variable("b"), 2);
     expected.put(f2.variable("c"), 3);
@@ -155,7 +155,7 @@ public class VariableProfileTest {
 
   @Test
   public void testNAryOperator() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 1);
     expected.put(f2.variable("b"), 2);
     expected.put(f2.variable("c"), 3);

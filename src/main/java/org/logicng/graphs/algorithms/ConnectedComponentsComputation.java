@@ -48,11 +48,11 @@ public class ConnectedComponentsComputation {
    * @return the set of sets of nodes representing the connected components
    */
   public static <T> Set<Set<Node<T>>> compute(final Graph<T> graph) {
-    final Set<Set<Node<T>>> connectedComponents = new LinkedHashSet<>();
-    final Set<Node<T>> unmarkedNodes = new LinkedHashSet<>(graph.nodes());
+    final Set<Set<Node<T>>> connectedComponents = new LinkedHashSet<Set<Node<T>>>();
+    final Set<Node<T>> unmarkedNodes = new LinkedHashSet<Node<T>>(graph.nodes());
 
     while (!unmarkedNodes.isEmpty()) {
-      Set<Node<T>> connectedComp = new LinkedHashSet<>();
+      Set<Node<T>> connectedComp = new LinkedHashSet<Node<T>>();
       deepFirstSearch(unmarkedNodes.iterator().next(), connectedComp, unmarkedNodes);
       connectedComponents.add(connectedComp);
     }

@@ -33,7 +33,6 @@ import org.logicng.formulas.FType;
 import org.logicng.formulas.Formula;
 
 import java.util.Collection;
-import java.util.Objects;
 
 /**
  * An extended proposition in LogicNG.  An extended proposition is a collection of formulas with additional information
@@ -101,19 +100,20 @@ public final class ExtendedProposition<T extends PropositionBagpack> extends Pro
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(this.formulas, this.bagback);
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (!(o instanceof ExtendedProposition))
+      return false;
+    ExtendedProposition<?> that = (ExtendedProposition<?>) o;
+    return formulas.equals(that.formulas) && (bagback != null ? bagback.equals(that.bagback) : that.bagback == null);
   }
 
   @Override
-  public boolean equals(final Object other) {
-    if (this == other)
-      return true;
-    if (other instanceof ExtendedProposition) {
-      final ExtendedProposition o = (ExtendedProposition) other;
-      return Objects.equals(this.formulas, o.formulas) && Objects.equals(this.bagback, o.bagback);
-    }
-    return false;
+  public int hashCode() {
+    int result = formulas.hashCode();
+    result = 31 * result + (bagback != null ? bagback.hashCode() : 0);
+    return result;
   }
 
   @Override

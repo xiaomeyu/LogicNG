@@ -98,9 +98,9 @@ public final class Or extends NAryOperator {
     if (other instanceof Formula && this.f == ((Formula) other).f)
       return false; // the same formula factory would have produced a == object
     if (other instanceof Or) { // this is not really efficient... but should not be done anyway!
-      final LinkedHashSet<Formula> thisOps = new LinkedHashSet<>(this.operands.length);
+      final LinkedHashSet<Formula> thisOps = new LinkedHashSet<Formula>(this.operands.length);
       Collections.addAll(thisOps, this.operands);
-      final LinkedHashSet<Formula> otherOps = new LinkedHashSet<>(((Or) other).operands.length);
+      final LinkedHashSet<Formula> otherOps = new LinkedHashSet<Formula>(((Or) other).operands.length);
       Collections.addAll(otherOps, ((Or) other).operands);
       return thisOps.equals(otherOps);
     }

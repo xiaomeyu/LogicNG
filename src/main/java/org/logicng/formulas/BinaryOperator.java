@@ -98,7 +98,7 @@ public abstract class BinaryOperator extends Formula {
   @Override
   public SortedSet<Variable> variables() {
     if (this.variables == null) {
-      final SortedSet<Variable> set = new TreeSet<>();
+      final SortedSet<Variable> set = new TreeSet<Variable>();
       set.addAll(this.left.variables());
       set.addAll(this.right.variables());
       this.variables = Collections.unmodifiableSortedSet(set);
@@ -108,7 +108,7 @@ public abstract class BinaryOperator extends Formula {
 
   @Override
   public SortedSet<Literal> literals() {
-    final SortedSet<Literal> set = new TreeSet<>();
+    final SortedSet<Literal> set = new TreeSet<Literal>();
     set.addAll(this.left.literals());
     set.addAll(this.right.literals());
     return Collections.unmodifiableSortedSet(set);

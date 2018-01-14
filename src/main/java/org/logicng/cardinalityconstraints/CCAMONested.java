@@ -91,8 +91,8 @@ final class CCAMONested implements CCAtMostOne {
         for (int j = i + 1; j < vars.size(); j++)
           this.result.addClause(vars.get(i).negate(), vars.get(j).negate());
     else {
-      final LNGVector<Literal> l1 = new LNGVector<>(vars.size() / 2);
-      final LNGVector<Literal> l2 = new LNGVector<>(vars.size() / 2);
+      final LNGVector<Literal> l1 = new LNGVector<Literal>(vars.size() / 2);
+      final LNGVector<Literal> l2 = new LNGVector<Literal>(vars.size() / 2);
       int i = 0;
       for (; i < vars.size() / 2; i++)
         l1.push(vars.get(i));

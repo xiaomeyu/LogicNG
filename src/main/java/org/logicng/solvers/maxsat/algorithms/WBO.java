@@ -110,12 +110,12 @@ public class WBO extends MaxSAT {
     this.weightStrategy = config.weightStrategy;
     this.symmetryStrategy = config.symmetry;
     this.symmetryBreakingLimit = config.limit;
-    this.coreMapping = new TreeMap<>();
+    this.coreMapping = new TreeMap<Integer, Integer>();
     this.assumptions = new LNGIntVector();
     this.indexSoftCore = new LNGIntVector();
-    this.softMapping = new LNGVector<>();
-    this.relaxationMapping = new LNGVector<>();
-    this.duplicatedSymmetryClauses = new HashSet<>();
+    this.softMapping = new LNGVector<LNGIntVector>();
+    this.relaxationMapping = new LNGVector<LNGIntVector>();
+    this.duplicatedSymmetryClauses = new HashSet<Pair<Integer, Integer>>();
     this.output = config.output;
   }
 
@@ -214,7 +214,7 @@ public class WBO extends MaxSAT {
     assert nbSatisfiable > 0;
     int nextWeight = weight;
     int nbClauses;
-    final SortedSet<Integer> nbWeights = new TreeSet<>();
+    final SortedSet<Integer> nbWeights = new TreeSet<Integer>();
     double alpha = 1.25;
     boolean findNext = false;
     while (true) {
@@ -389,9 +389,9 @@ public class WBO extends MaxSAT {
               LNGIntVector clause = new LNGIntVector();
               clause.push(not(coreIntersection[coreList.get(k)].get(m)));
               clause.push(not(coreIntersectionCurrent[coreList.get(k)].get(j)));
-              Pair<Integer, Integer> symClause = new Pair<>(var(coreIntersection[coreList.get(k)].get(m)), var(coreIntersectionCurrent[coreList.get(k)].get(j)));
+              Pair<Integer, Integer> symClause = new Pair<Integer, Integer>(var(coreIntersection[coreList.get(k)].get(m)), var(coreIntersectionCurrent[coreList.get(k)].get(j)));
               if (var(coreIntersection[coreList.get(k)].get(m)) > var(coreIntersectionCurrent[coreList.get(k)].get(j)))
-                symClause = new Pair<>(var(coreIntersectionCurrent[coreList.get(k)].get(j)), var(coreIntersection[coreList.get(k)].get(m)));
+                symClause = new Pair<Integer, Integer>(var(coreIntersectionCurrent[coreList.get(k)].get(j)), var(coreIntersection[coreList.get(k)].get(m)));
               if (!this.duplicatedSymmetryClauses.contains(symClause)) {
                 this.duplicatedSymmetryClauses.add(symClause);
                 addHardClause(clause);

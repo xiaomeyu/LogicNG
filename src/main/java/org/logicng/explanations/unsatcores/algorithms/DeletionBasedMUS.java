@@ -48,8 +48,8 @@ public final class DeletionBasedMUS extends MUSAlgorithm {
 
   @Override
   public <T extends Proposition> UNSATCore<T> computeMUS(List<T> propositions, final FormulaFactory f, final MUSConfig config) {
-    final List<T> mus = new ArrayList<>(propositions.size());
-    final List<SolverState> solverStates = new ArrayList<>(propositions.size());
+    final List<T> mus = new ArrayList<T>(propositions.size());
+    final List<SolverState> solverStates = new ArrayList<SolverState>(propositions.size());
     final MiniSat solver = MiniSat.miniSat(f);
     for (final Proposition proposition : propositions) {
       solverStates.add(solver.saveState());
@@ -64,6 +64,6 @@ public final class DeletionBasedMUS extends MUSAlgorithm {
       if (solver.sat() == Tristate.TRUE)
         mus.add(propositions.get(i));
     }
-    return new UNSATCore<>(mus, true);
+    return new UNSATCore<T>(mus, true);
   }
 }

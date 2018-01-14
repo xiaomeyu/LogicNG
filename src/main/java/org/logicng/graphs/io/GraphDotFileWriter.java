@@ -75,7 +75,7 @@ public class GraphDotFileWriter {
   public static <T> void write(final File file, final Graph<T> graph) throws IOException {
     final StringBuilder sb = new StringBuilder("strict graph {\n");
 
-    Set<Node<T>> doneNodes = new LinkedHashSet<>();
+    Set<Node<T>> doneNodes = new LinkedHashSet<Node<T>>();
     for (Node<T> d : graph.nodes()) {
       for (Node<T> n : d.neighbours())
         if (!doneNodes.contains(n))
@@ -88,10 +88,12 @@ public class GraphDotFileWriter {
       }
     }
     sb.append("}");
-
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
       writer.flush();
+    } finally {
+      writer.close();
     }
   }
 }

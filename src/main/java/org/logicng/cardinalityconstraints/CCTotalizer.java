@@ -129,8 +129,8 @@ final class CCTotalizer {
   private LNGVector<Variable> initializeConstraint(final EncodingResult result, final Variable[] vars) {
     result.reset();
     this.result = result;
-    this.cardinalityInvars = new LNGVector<>(vars.length);
-    final LNGVector<Variable> cardinalityOutvars = new LNGVector<>(vars.length);
+    this.cardinalityInvars = new LNGVector<Variable>(vars.length);
+    final LNGVector<Variable> cardinalityOutvars = new LNGVector<Variable>(vars.length);
     for (final Variable var : vars) {
       this.cardinalityInvars.push(var);
       cardinalityOutvars.push(this.result.newVariable());
@@ -147,8 +147,8 @@ final class CCTotalizer {
   }
 
   private void toCNF(final LNGVector<Variable> vars, int rhs, final Bound bound) {
-    final LNGVector<Variable> left = new LNGVector<>();
-    final LNGVector<Variable> right = new LNGVector<>();
+    final LNGVector<Variable> left = new LNGVector<Variable>();
+    final LNGVector<Variable> right = new LNGVector<Variable>();
     assert vars.size() > 1;
     int split = vars.size() / 2;
     for (int i = 0; i < vars.size(); i++) {

@@ -63,7 +63,7 @@ public class CCPerformanceTest {
     int counter = 0;
     for (final CCConfig config : this.configs) {
       f.putConfiguration(config);
-      buildAMK(10_000, f, false);
+      buildAMK(10000, f, false);
       Assert.assertTrue(f.newCCVariable().name().endsWith("_" + counter++));
     }
   }
@@ -71,7 +71,7 @@ public class CCPerformanceTest {
   @Test
   public void testAMKPerformanceMiniCard() {
     final FormulaFactory f = new FormulaFactory();
-    buildAMK(10_000, f, true);
+    buildAMK(10000, f, true);
     Assert.assertTrue(f.newCCVariable().name().endsWith("_0"));
   }
 

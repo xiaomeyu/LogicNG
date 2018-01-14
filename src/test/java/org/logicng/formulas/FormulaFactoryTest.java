@@ -131,11 +131,11 @@ public class FormulaFactoryTest {
     Formula clause2 = f.or(c, d.negate());
     Formula nClause1 = f.implication(a, c);
 
-    List<Formula> clauses = new ArrayList<>();
+    List<Formula> clauses = new ArrayList<Formula>();
     clauses.add(clause1);
     clauses.add(clause2);
 
-    List<Formula> nClauses = new ArrayList<>();
+    List<Formula> nClauses = new ArrayList<Formula>();
     nClauses.add(clause1);
     nClauses.add(clause2);
     nClauses.add(nClause1);

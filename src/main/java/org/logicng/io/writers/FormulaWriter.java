@@ -108,9 +108,11 @@ public final class FormulaWriter {
         sb.append(formatter.toString(f)).append("\n");
     else
       sb.append(formatter.toString(formula));
-    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")))) {
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+    try {
       writer.append(sb);
-      writer.flush();
+    } finally {
+      writer.close();
     }
   }
 }

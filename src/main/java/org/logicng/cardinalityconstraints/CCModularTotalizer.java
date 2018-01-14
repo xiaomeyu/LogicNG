@@ -81,7 +81,7 @@ final class CCModularTotalizer {
     this.varError = f.variable("RESERVED@VAR_ERROR");
     this.h0 = this.varUndef;
     this.currentCardinalityRhs = -1;
-    this.inlits = new LNGVector<>();
+    this.inlits = new LNGVector<Literal>();
   }
 
   /**
@@ -132,16 +132,16 @@ final class CCModularTotalizer {
   private int initialize(final EncodingResult result, int rhs, int n) {
     result.reset();
     this.result = result;
-    this.cardinalityUpOutvars = new LNGVector<>();
-    this.cardinalityLwOutvars = new LNGVector<>();
+    this.cardinalityUpOutvars = new LNGVector<Literal>();
+    this.cardinalityLwOutvars = new LNGVector<Literal>();
     int mod = (int) Math.ceil(Math.sqrt(rhs + 1.0));
-    this.cardinalityUpOutvars = new LNGVector<>(n / mod);
+    this.cardinalityUpOutvars = new LNGVector<Literal>(n / mod);
     for (int i = 0; i < n / mod; i++)
       this.cardinalityUpOutvars.push(this.result.newVariable());
-    this.cardinalityLwOutvars = new LNGVector<>(mod - 1);
+    this.cardinalityLwOutvars = new LNGVector<Literal>(mod - 1);
     for (int i = 0; i < mod - 1; i++)
       this.cardinalityLwOutvars.push(this.result.newVariable());
-    this.inlits = new LNGVector<>(n);
+    this.inlits = new LNGVector<Literal>(n);
     this.currentCardinalityRhs = rhs + 1;
     if (this.cardinalityUpOutvars.size() == 0)
       this.cardinalityUpOutvars.push(this.h0);
@@ -170,10 +170,10 @@ final class CCModularTotalizer {
   }
 
   private void toCNF(int mod, final LNGVector<Literal> ubvars, final LNGVector<Literal> lwvars, int rhs) {
-    LNGVector<Literal> lupper = new LNGVector<>();
-    LNGVector<Literal> llower = new LNGVector<>();
-    LNGVector<Literal> rupper = new LNGVector<>();
-    LNGVector<Literal> rlower = new LNGVector<>();
+    LNGVector<Literal> lupper = new LNGVector<Literal>();
+    LNGVector<Literal> llower = new LNGVector<Literal>();
+    LNGVector<Literal> rupper = new LNGVector<Literal>();
+    LNGVector<Literal> rlower = new LNGVector<Literal>();
     assert rhs > 1;
     int split = rhs / 2;
     int left = 1;
@@ -288,7 +288,7 @@ final class CCModularTotalizer {
         if (i + j < upper.size())
           d = upper.get(i + j);
         if (c != this.varUndef && c != this.varError) {
-          final LNGVector<Literal> clause = new LNGVector<>();
+          final LNGVector<Literal> clause = new LNGVector<Literal>();
           if (a != this.varUndef && a != this.varError)
             clause.push(a.negate());
           if (b != this.varUndef && b != this.varError)
@@ -297,7 +297,7 @@ final class CCModularTotalizer {
           if (clause.size() > 1)
             this.result.addClause(clause);
         }
-        final LNGVector<Literal> clause = new LNGVector<>();
+        final LNGVector<Literal> clause = new LNGVector<Literal>();
         clause.push(carry.negate());
         if (a != this.varUndef && a != this.varError)
           clause.push(a.negate());

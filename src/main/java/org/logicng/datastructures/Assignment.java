@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -74,13 +73,13 @@ public class Assignment {
    */
   public Assignment(final boolean fastEvaluable) {
     this.fastEvaluable = fastEvaluable;
-    this.negVars = new ArrayList<>();
+    this.negVars = new ArrayList<Variable>();
     if (!fastEvaluable) {
-      this.pos = new ArrayList<>();
-      this.neg = new ArrayList<>();
+      this.pos = new ArrayList<Variable>();
+      this.neg = new ArrayList<Literal>();
     } else {
-      this.pos = new HashSet<>();
-      this.neg = new HashSet<>();
+      this.pos = new HashSet<Variable>();
+      this.neg = new HashSet<Literal>();
     }
   }
 
@@ -140,8 +139,8 @@ public class Assignment {
    */
   public void convertToFastEvaluable() {
     if (!this.fastEvaluable) {
-      this.pos = new HashSet<>(this.pos);
-      this.neg = new HashSet<>(this.neg);
+      this.pos = new HashSet<Variable>(this.pos);
+      this.neg = new HashSet<Literal>(this.neg);
       this.fastEvaluable = true;
     }
   }
@@ -168,7 +167,7 @@ public class Assignment {
    */
   public List<Variable> positiveLiterals() {
     if (this.fastEvaluable)
-      return Collections.unmodifiableList(new ArrayList<>(this.pos));
+      return Collections.unmodifiableList(new ArrayList<Variable>(this.pos));
     else
       return Collections.unmodifiableList((List<Variable>) this.pos);
   }
@@ -179,7 +178,7 @@ public class Assignment {
    */
   public List<Literal> negativeLiterals() {
     if (this.fastEvaluable)
-      return Collections.unmodifiableList(new ArrayList<>(this.neg));
+      return Collections.unmodifiableList(new ArrayList<Literal>(this.neg));
     else
       return Collections.unmodifiableList((List<Literal>) this.neg);
   }
@@ -197,7 +196,7 @@ public class Assignment {
    * @return all literals of this assignment
    */
   public SortedSet<Literal> literals() {
-    final SortedSet<Literal> set = new TreeSet<>();
+    final SortedSet<Literal> set = new TreeSet<Literal>();
     set.addAll(this.pos);
     set.addAll(this.neg);
     return set;
@@ -261,7 +260,7 @@ public class Assignment {
    * @return the blocking clause for this assignment
    */
   public Formula blockingClause(final FormulaFactory f, final Collection<? extends Literal> literals) {
-    final List<Literal> ops = new LinkedList<>();
+    final List<Literal> ops = new LinkedList<Literal>();
     for (final Literal l : this.pos)
       if (literals == null || literals.contains(l))
         ops.add(l.negate());
@@ -272,22 +271,31 @@ public class Assignment {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(new HashSet<>(this.pos), new HashSet<>(this.neg));
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (!(o instanceof Assignment))
+      return false;
+    Assignment that = (Assignment) o;
+    if (this.pos != null && that.pos != null) {
+      final HashSet<Variable> thisPos = new HashSet<Variable>(this.pos);
+      final HashSet<Variable> thatPos = new HashSet<Variable>(that.pos);
+      if (!thisPos.equals(thatPos))
+        return false;
+    }
+    if (this.neg != null && that.neg != null) {
+      final HashSet<Literal> thisNeg = new HashSet<Literal>(this.neg);
+      final HashSet<Literal> thatNeg = new HashSet<Literal>(that.neg);
+      return thisNeg.equals(thatNeg);
+    }
+    return false;
   }
 
   @Override
-  public boolean equals(final Object other) {
-    if (other == null)
-      return false;
-    if (this == other)
-      return true;
-    if (this.getClass() == other.getClass()) {
-      final Assignment o = (Assignment) other;
-      return Objects.equals(new HashSet<>(this.pos), new HashSet<>(o.pos))
-              && Objects.equals(new HashSet<>(this.neg), new HashSet<>(o.neg));
-    }
-    return false;
+  public int hashCode() {
+    int result = pos != null ? pos.hashCode() : 0;
+    result = 31 * result + (neg != null ? neg.hashCode() : 0);
+    return result;
   }
 
   @Override

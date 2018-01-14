@@ -83,7 +83,7 @@ final class SequentialWeightCounter extends Encoding {
     this.pbOutlits = new LNGIntVector();
     this.unitLits = new LNGIntVector();
     this.unitCoeffs = new LNGIntVector();
-    this.seqAuxiliaryInc = new LNGVector<>();
+    this.seqAuxiliaryInc = new LNGVector<LNGIntVector>();
     this.litsInc = new LNGIntVector();
     this.coeffsInc = new LNGIntVector();
   }
@@ -219,7 +219,7 @@ final class SequentialWeightCounter extends Encoding {
       return;
     }
     int n = lits.size();
-    this.seqAuxiliaryInc = new LNGVector<>(size + 1);
+    this.seqAuxiliaryInc = new LNGVector<LNGIntVector>(size + 1);
     for (int i = 0; i <= n; i++) {
       this.seqAuxiliaryInc.set(i, new LNGIntVector());
       this.seqAuxiliaryInc.get(i).growTo(rhs + 1, -1);

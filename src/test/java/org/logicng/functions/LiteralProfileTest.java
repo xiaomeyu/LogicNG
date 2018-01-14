@@ -85,17 +85,17 @@ public class LiteralProfileTest {
 
   @Test
   public void testConstants() {
-    Assert.assertEquals(new HashMap<>(), f.verum().apply(litProfile, true));
-    Assert.assertEquals(new HashMap<>(), f.verum().apply(litProfile, false));
-    Assert.assertEquals(new HashMap<>(), f.falsum().apply(litProfile, true));
-    Assert.assertEquals(new HashMap<>(), f.falsum().apply(litProfile, false));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.verum().apply(litProfile, true));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.verum().apply(litProfile, false));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.falsum().apply(litProfile, true));
+    Assert.assertEquals(new HashMap<Object, Object>(), f.falsum().apply(litProfile, false));
   }
 
   @Test
   public void testLiterals() {
-    final Map<Literal, Integer> expectedPos = new HashMap<>();
+    final Map<Literal, Integer> expectedPos = new HashMap<Literal, Integer>();
     expectedPos.put(f2.variable("a"), 1);
-    final Map<Literal, Integer> expectedNeg = new HashMap<>();
+    final Map<Literal, Integer> expectedNeg = new HashMap<Literal, Integer>();
     expectedNeg.put(f2.literal("a", false), 1);
     Assert.assertEquals(expectedPos, f.literal("a", true).apply(litProfile, true));
     Assert.assertEquals(expectedPos, f.literal("a", true).apply(litProfile, false));
@@ -105,13 +105,13 @@ public class LiteralProfileTest {
 
   @Test
   public void testPBC() {
-    final SortedMap<Literal, Integer> exp1 = new TreeMap<>();
+    final SortedMap<Literal, Integer> exp1 = new TreeMap<Literal, Integer>();
     exp1.put(f.variable("a"), 1);
-    final SortedMap<Literal, Integer> exp2 = new TreeMap<>();
+    final SortedMap<Literal, Integer> exp2 = new TreeMap<Literal, Integer>();
     exp2.put(f.variable("a"), 1);
     exp2.put(f.literal("b", false), 1);
     exp2.put(f.variable("c"), 1);
-    final SortedMap<Literal, Integer> exp2CC = new TreeMap<>();
+    final SortedMap<Literal, Integer> exp2CC = new TreeMap<Literal, Integer>();
     exp2CC.put(f.variable("a"), 1);
     exp2CC.put(f.variable("b"), 1);
     exp2CC.put(f.variable("c"), 1);
@@ -137,7 +137,7 @@ public class LiteralProfileTest {
 
   @Test
   public void testNot() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 2);
     expected.put(f2.variable("b"), 1);
     expected.put(f2.variable("c"), 1);
@@ -151,7 +151,7 @@ public class LiteralProfileTest {
 
   @Test
   public void testBinaryOperator() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 2);
     expected.put(f2.variable("b"), 1);
     expected.put(f2.variable("c"), 1);
@@ -168,7 +168,7 @@ public class LiteralProfileTest {
 
   @Test
   public void testNAryOperator() throws ParserException {
-    final Map<Literal, Integer> expected = new HashMap<>();
+    final Map<Literal, Integer> expected = new HashMap<Literal, Integer>();
     expected.put(f2.variable("a"), 2);
     expected.put(f2.variable("b"), 1);
     expected.put(f2.variable("c"), 1);

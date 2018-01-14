@@ -56,7 +56,7 @@ public class Graph<T> {
    * @param name the name of the graph
    */
   public Graph(final String name) {
-    this.nodes = new LinkedHashMap<>();
+    this.nodes = new LinkedHashMap<T, Node<T>>();
     this.name = name;
   }
 
@@ -69,7 +69,7 @@ public class Graph<T> {
     final Node<T> search = nodes.get(content);
     if (search != null)
       return search;
-    final Node<T> n = new Node<>(content, this);
+    final Node<T> n = new Node<T>(content, this);
     nodes.put(content, n);
     return n;
   }
@@ -79,7 +79,7 @@ public class Graph<T> {
    * @return a set containing all nodes of the graph
    */
   public Set<Node<T>> nodes() {
-    return new LinkedHashSet<>(nodes.values());
+    return new LinkedHashSet<Node<T>>(nodes.values());
   }
 
   /**

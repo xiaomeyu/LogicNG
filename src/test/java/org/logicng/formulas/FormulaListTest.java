@@ -75,7 +75,7 @@ public class FormulaListTest {
     Assert.assertEquals(f.variable("a"), l4.get(0));
     Assert.assertEquals(f.variable("b"), l4.get(1));
     Assert.assertEquals(f.literal("c", false), l4.get(2));
-    ImmutableFormulaList l5 = new ImmutableFormulaList(new LNGVector<>(f.variable("a"), f.variable("b"), f.literal("c", false)));
+    ImmutableFormulaList l5 = new ImmutableFormulaList(new LNGVector<Literal>(f.variable("a"), f.variable("b"), f.literal("c", false)));
     Assert.assertFalse(l5.empty());
     Assert.assertEquals(3, l5.size());
     Assert.assertEquals(f.variable("a"), l5.get(0));
@@ -87,7 +87,7 @@ public class FormulaListTest {
     Assert.assertEquals(f.variable("a"), l6.get(0));
     Assert.assertEquals(f.variable("b"), l6.get(1));
     Assert.assertEquals(f.literal("c", false), l6.get(2));
-    ImmutableFormulaList l7 = new ImmutableFormulaList(AND, new LNGVector<>(f.variable("a"), f.variable("b"), f.literal("c", false)));
+    ImmutableFormulaList l7 = new ImmutableFormulaList(AND, new LNGVector<Literal>(f.variable("a"), f.variable("b"), f.literal("c", false)));
     Assert.assertEquals(3, l7.size());
     Assert.assertEquals(f.variable("a"), l7.get(0));
     Assert.assertEquals(f.variable("b"), l7.get(1));
@@ -175,7 +175,7 @@ public class FormulaListTest {
   public void testVarProfile() {
     ImmutableFormulaList l = new ImmutableFormulaList(f.variable("a"), f.variable("b"), f.literal("c", false),
             f.or(f.variable("a"), f.variable("b")), f.variable("c"));
-    SortedMap<Literal, Integer> profile = new TreeMap<>();
+    SortedMap<Literal, Integer> profile = new TreeMap<Literal, Integer>();
     profile.put(f.variable("a"), 2);
     profile.put(f.variable("b"), 2);
     profile.put(f.variable("c"), 2);
@@ -186,7 +186,7 @@ public class FormulaListTest {
   public void testLitProfile() {
     ImmutableFormulaList l = new ImmutableFormulaList(f.variable("a"), f.variable("b"), f.literal("c", false),
             f.or(f.variable("a"), f.variable("b")), f.variable("c"));
-    SortedMap<Literal, Integer> profile = new TreeMap<>();
+    SortedMap<Literal, Integer> profile = new TreeMap<Literal, Integer>();
     profile.put(f.variable("a"), 2);
     profile.put(f.variable("b"), 2);
     profile.put(f.variable("c"), 1);

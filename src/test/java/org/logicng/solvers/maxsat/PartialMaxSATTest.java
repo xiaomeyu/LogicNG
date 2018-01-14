@@ -187,7 +187,7 @@ public class PartialMaxSATTest {
       }
     }
     String[] tokens;
-    final List<Literal> literals = new ArrayList<>();
+    final List<Literal> literals = new ArrayList<Literal>();
     while (reader.ready()) {
       tokens = reader.readLine().split(" ");
       assert tokens.length >= 3;

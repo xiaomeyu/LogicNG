@@ -83,9 +83,9 @@ final class PBSWC implements PBEncoding {
   private void generateConstraint(int rhs, final LNGVector<Literal> lits, final LNGIntVector coeffs,
                                   final List<Formula> result) {
     int n = lits.size();
-    final LNGVector<LNGVector<Literal>> seqAuxiliary = new LNGVector<>(n + 1);
+    final LNGVector<LNGVector<Literal>> seqAuxiliary = new LNGVector<LNGVector<Literal>>(n + 1);
     for (int i = 0; i < n + 1; i++) {
-      final LNGVector<Literal> temp = new LNGVector<>();
+      final LNGVector<Literal> temp = new LNGVector<Literal>();
       temp.growTo(rhs + 1);
       seqAuxiliary.push(temp);
     }

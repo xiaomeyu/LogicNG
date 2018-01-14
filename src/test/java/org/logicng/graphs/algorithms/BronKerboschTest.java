@@ -50,7 +50,7 @@ public class BronKerboschTest {
   public void graph50Test() throws IOException {
     Graph<Long> g = GraphTest.getLongGraph("50");
 
-    BronKerbosch<Long> bkp = new BronKerbosch<>(g);
+    BronKerbosch<Long> bkp = new BronKerbosch<Long>(g);
     Set<SortedSet<Node<Long>>> resultBkp = bkp.compute();
 
     Assert.assertEquals(910, resultBkp.size());

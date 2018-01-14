@@ -164,7 +164,7 @@ public final class GlucoseSyrup extends MiniSatStyleSolver {
    */
   private void initializeGlucose() {
     this.initializeGlucoseConfig();
-    this.watchesBin = new LNGVector<>();
+    this.watchesBin = new LNGVector<LNGVector<MSWatcher>>();
     this.permDiff = new LNGIntVector();
     this.lastDecisionLevel = new LNGIntVector();
     this.lbdQueue = new LNGBoundedLongQueue();

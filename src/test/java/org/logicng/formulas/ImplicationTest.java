@@ -73,12 +73,12 @@ public class ImplicationTest {
   @Test
   public void testVariables() {
     Assert.assertEquals(4, F.IMP3.variables().size());
-    SortedSet<Variable> lits = new TreeSet<>(Arrays.asList(F.A, F.B, F.X, F.Y));
+    SortedSet<Variable> lits = new TreeSet<Variable>(Arrays.asList(F.A, F.B, F.X, F.Y));
     Assert.assertEquals(lits, F.IMP3.variables());
 
     Formula imp = F.f.implication(F.AND1, F.AND2);
     Assert.assertEquals(2, imp.variables().size());
-    lits = new TreeSet<>(Arrays.asList(F.A, F.B));
+    lits = new TreeSet<Variable>(Arrays.asList(F.A, F.B));
     Assert.assertEquals(lits, imp.variables());
   }
 
@@ -90,7 +90,7 @@ public class ImplicationTest {
 
     Formula imp = F.f.implication(F.AND1, F.AND2);
     Assert.assertEquals(4, imp.literals().size());
-    lits = new TreeSet<>(Arrays.asList(F.A, F.B, F.NA, F.NB));
+    lits = new TreeSet<Literal>(Arrays.asList(F.A, F.B, F.NA, F.NB));
     Assert.assertEquals(lits, imp.literals());
 
     imp = F.f.implication(F.AND1, F.A);

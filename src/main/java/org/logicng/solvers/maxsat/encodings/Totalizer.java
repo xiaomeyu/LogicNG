@@ -87,9 +87,9 @@ final class Totalizer extends Encoding {
     this.joinMode = false;
     this.currentCardinalityRhs = -1;
     this.incrementalStrategy = strategy;
-    this.totalizerIterativeLeft = new LNGVector<>();
-    this.totalizerIterativeRight = new LNGVector<>();
-    this.totalizerIterativeOutput = new LNGVector<>();
+    this.totalizerIterativeLeft = new LNGVector<LNGIntVector>();
+    this.totalizerIterativeRight = new LNGVector<LNGIntVector>();
+    this.totalizerIterativeOutput = new LNGVector<LNGIntVector>();
     this.totalizerIterativeRhs = new LNGIntVector();
     this.cardinalityInlits = new LNGIntVector();
     this.cardinalityOutlits = new LNGIntVector();

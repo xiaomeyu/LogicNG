@@ -84,7 +84,7 @@ public final class DNFFactorization implements FormulaTransformation {
         cached = apply(formula.nnf(), cache);
         break;
       case OR:
-        LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+        LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
         for (final Formula op : formula) {
           final Formula apply = this.apply(op, cache);
           if (!this.proceed)
@@ -94,7 +94,7 @@ public final class DNFFactorization implements FormulaTransformation {
         cached = formula.factory().or(nops);
         break;
       case AND:
-        nops = new LinkedHashSet<>();
+        nops = new LinkedHashSet<Formula>();
         for (final Formula op : formula) {
           if (!this.proceed)
             return null;
@@ -131,7 +131,7 @@ public final class DNFFactorization implements FormulaTransformation {
     if (this.proceed) {
       final FormulaFactory f = f1.factory();
       if (f1.type() == FType.OR || f2.type() == FType.OR) {
-        final LinkedHashSet<Formula> nops = new LinkedHashSet<>();
+        final LinkedHashSet<Formula> nops = new LinkedHashSet<Formula>();
         for (final Formula op : f1.type() == FType.OR ? f1 : f2) {
           final Formula distribute = this.distribute(op, f1.type() == FType.OR ? f2 : f1);
           if (!this.proceed)

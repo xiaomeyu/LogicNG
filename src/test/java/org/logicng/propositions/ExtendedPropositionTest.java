@@ -38,7 +38,6 @@ import org.logicng.io.parsers.PropositionalParser;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Objects;
 
 /**
  * Unit tests for {@link ExtendedProposition}.
@@ -56,10 +55,10 @@ public class ExtendedPropositionTest {
   public ExtendedPropositionTest() throws ParserException {
     FormulaFactory f = new FormulaFactory();
     p = new PropositionalParser(f);
-    prop1 = new ExtendedProposition<>(new BagPack("prop1"), p.parse("a & b"));
-    prop2 = new ExtendedProposition<>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
-    prop3 = new ExtendedProposition<>(new BagPack("prop3"), p.parse("a & b"), p.parse("~c"));
-    prop4 = new ExtendedProposition<>(new BagPack("prop4"), new ImmutableFormulaList(p.parse("a & b"), p.parse("~c")));
+    prop1 = new ExtendedProposition<BagPack>(new BagPack("prop1"), p.parse("a & b"));
+    prop2 = new ExtendedProposition<BagPack>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
+    prop3 = new ExtendedProposition<BagPack>(new BagPack("prop3"), p.parse("a & b"), p.parse("~c"));
+    prop4 = new ExtendedProposition<BagPack>(new BagPack("prop4"), new ImmutableFormulaList(p.parse("a & b"), p.parse("~c")));
   }
 
   @Test
@@ -87,8 +86,8 @@ public class ExtendedPropositionTest {
 
   @Test
   public void testHashCode() throws ParserException {
-    ExtendedProposition<BagPack> prop11 = new ExtendedProposition<>(new BagPack("prop1"), p.parse("a & b"));
-    ExtendedProposition<BagPack> prop21 = new ExtendedProposition<>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
+    ExtendedProposition<BagPack> prop11 = new ExtendedProposition<BagPack>(new BagPack("prop1"), p.parse("a & b"));
+    ExtendedProposition<BagPack> prop21 = new ExtendedProposition<BagPack>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
     Assert.assertEquals(prop1.hashCode(), prop1.hashCode());
     Assert.assertEquals(prop1.hashCode(), prop11.hashCode());
     Assert.assertEquals(prop2.hashCode(), prop21.hashCode());
@@ -96,9 +95,9 @@ public class ExtendedPropositionTest {
 
   @Test
   public void testEquals() throws ParserException {
-    ExtendedProposition<BagPack> prop11 = new ExtendedProposition<>(new BagPack("prop1"), p.parse("a & b"));
-    ExtendedProposition<BagPack> prop21 = new ExtendedProposition<>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
-    ExtendedProposition<BagPack> prop31 = new ExtendedProposition<>(new BagPack("prop3"), Collections.singletonList(p.parse("a & b")));
+    ExtendedProposition<BagPack> prop11 = new ExtendedProposition<BagPack>(new BagPack("prop1"), p.parse("a & b"));
+    ExtendedProposition<BagPack> prop21 = new ExtendedProposition<BagPack>(new BagPack("prop2"), Arrays.asList(p.parse("a & b"), p.parse("~c")));
+    ExtendedProposition<BagPack> prop31 = new ExtendedProposition<BagPack>(new BagPack("prop3"), Collections.singletonList(p.parse("a & b")));
     Assert.assertTrue(prop1.equals(prop1));
     Assert.assertTrue(prop1.equals(prop11));
     Assert.assertTrue(prop2.equals(prop21));
@@ -125,13 +124,18 @@ public class ExtendedPropositionTest {
     }
 
     @Override
-    public int hashCode() {
-      return description.hashCode();
+    public boolean equals(Object o) {
+      if (this == o)
+        return true;
+      if (!(o instanceof BagPack))
+        return false;
+      BagPack bagPack = (BagPack) o;
+      return description != null ? description.equals(bagPack.description) : bagPack.description == null;
     }
 
     @Override
-    public boolean equals(Object obj) {
-      return obj instanceof BagPack && Objects.equals(this.description, ((BagPack) obj).description);
+    public int hashCode() {
+      return description != null ? description.hashCode() : 0;
     }
 
     @Override

@@ -68,7 +68,7 @@ public final class CLOccs implements Iterable<CLClause> {
    */
   public CLOccs() {
     this.count = 0;
-    this.clauses = new LNGVector<>();
+    this.clauses = new LNGVector<CLClause>();
   }
 
   /**

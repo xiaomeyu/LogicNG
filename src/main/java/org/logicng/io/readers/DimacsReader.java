@@ -80,15 +80,16 @@ public final class DimacsReader {
    * @throws IOException if there was a problem reading the file
    */
   public static List<Formula> readCNF(final File file, final FormulaFactory f, final String prefix) throws IOException {
-    List<Formula> result = new ArrayList<>();
-    try (final BufferedReader br = new BufferedReader(new FileReader(file))) {
+    List<Formula> result = new ArrayList<Formula>();
+    final BufferedReader br = new BufferedReader(new FileReader(file));
+    try {
       while (br.ready()) {
         final String line = br.readLine();
         if (!line.startsWith("c") && !line.startsWith("p") && !line.trim().isEmpty()) {
           String[] split = line.split("\\s+");
           if (!"0".equals(split[split.length - 1].trim()))
             throw new IllegalArgumentException("Line " + line + " did not end with 0.");
-          LinkedHashSet<Literal> vars = new LinkedHashSet<>(split.length - 1);
+          LinkedHashSet<Literal> vars = new LinkedHashSet<Literal>(split.length - 1);
           for (int i = 0; i < split.length - 1; i++) {
             String lit = split[i].trim();
             if (!lit.isEmpty()) {
@@ -101,6 +102,8 @@ public final class DimacsReader {
           result.add(f.or(vars));
         }
       }
+    } finally {
+      br.close();
     }
     return result;
   }

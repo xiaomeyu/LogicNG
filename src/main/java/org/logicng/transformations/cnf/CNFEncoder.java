@@ -118,7 +118,7 @@ public class CNFEncoder {
    */
   private Formula advancedEncoding(final Formula formula) {
     if (formula.type() == FType.AND) {
-      final List<Formula> operands = new ArrayList<>(formula.numberOfOperands());
+      final List<Formula> operands = new ArrayList<Formula>(formula.numberOfOperands());
       for (final Formula op : formula)
         operands.add(singleAdvancedEncoding(op));
       return this.f.and(operands);

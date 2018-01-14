@@ -110,9 +110,9 @@ public final class TseitinTransformation implements FormulaTransformation {
         break;
       case AND:
         Literal tsLiteral = f.newCNFVariable();
-        List<Formula> nops = new ArrayList<>();
-        List<Formula> operands = new ArrayList<>(formula.numberOfOperands());
-        List<Formula> negOperands = new ArrayList<>(formula.numberOfOperands());
+        List<Formula> nops = new ArrayList<Formula>();
+        List<Formula> operands = new ArrayList<Formula>(formula.numberOfOperands());
+        List<Formula> negOperands = new ArrayList<Formula>(formula.numberOfOperands());
         negOperands.add(tsLiteral);
         for (final Formula op : formula) {
           if (op.type() != FType.LITERAL) {
@@ -130,9 +130,9 @@ public final class TseitinTransformation implements FormulaTransformation {
         break;
       case OR:
         tsLiteral = f.newCNFVariable();
-        nops = new ArrayList<>();
-        operands = new ArrayList<>(formula.numberOfOperands());
-        negOperands = new ArrayList<>(formula.numberOfOperands());
+        nops = new ArrayList<Formula>();
+        operands = new ArrayList<Formula>(formula.numberOfOperands());
+        negOperands = new ArrayList<Formula>(formula.numberOfOperands());
         operands.add(tsLiteral.negate());
         for (final Formula op : formula) {
           if (op.type() != FType.LITERAL) {
