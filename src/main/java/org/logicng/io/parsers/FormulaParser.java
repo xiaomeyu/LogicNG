@@ -28,8 +28,17 @@
 
 package org.logicng.io.parsers;
 
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Lexer;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.logicng.formulas.Formula;
 import org.logicng.formulas.FormulaFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Super class for a formula parser.
@@ -39,22 +48,67 @@ import org.logicng.formulas.FormulaFactory;
 public abstract class FormulaParser {
 
   private final FormulaFactory f;
+  private Lexer lexer;
+  private ParserWithFormula parser;
 
   /**
    * Constructor.
    * @param f the formula factory
    */
-  FormulaParser(FormulaFactory f) {
+  FormulaParser(final FormulaFactory f) {
     this.f = f;
   }
 
   /**
-   * Parses and returns a given string.
-   * @param string the input string
-   * @return the {@link Formula} representation of the given string
-   * @throws ParserException if there was a problem parsing the string
+   * Sets the internal lexer and the parser.
+   * @param lexer  the lexer
+   * @param parser the parser
    */
-  public abstract Formula parse(final String string) throws ParserException;
+  void setLexerAndParser(final Lexer lexer, final ParserWithFormula parser) {
+    this.lexer = lexer;
+    this.parser = parser;
+    this.parser.setFormulaFactory(this.f);
+    this.lexer.removeErrorListeners();
+    this.parser.removeErrorListeners();
+    this.parser.setErrorHandler(new BailErrorStrategy());
+  }
+
+  /**
+   * Parses and returns a given input stream.
+   * @param inputStream an input stream
+   * @return the {@link Formula} representation of this stream
+   * @throws ParserException if there was a problem with the input stream
+   */
+  public Formula parse(final InputStream inputStream) throws ParserException {
+    if (inputStream == null) {
+      return this.f.verum();
+    }
+    try {
+      final ANTLRInputStream input = new ANTLRInputStream(inputStream);
+      this.lexer.setInputStream(input);
+      final CommonTokenStream tokens = new CommonTokenStream(this.lexer);
+      this.parser.setInputStream(tokens);
+      return this.parser.getParsedFormula();
+    } catch (final IOException e) {
+      throw new ParserException("IO exception when parsing the formula", e);
+    } catch (final ParseCancellationException e) {
+      throw new ParserException("Parse cancellation exception when parsing the formula", e);
+    } catch (final LexerException e) {
+      throw new ParserException("Lexer exception when parsing the formula.", e);
+    }
+  }
+
+  /**
+   * Parses and returns a given string.
+   * @param in a string
+   * @return the {@link Formula} representation of this string
+   * @throws ParserException if the string was not a valid formula
+   */
+  public Formula parse(final String in) throws ParserException {
+    if (in == null)
+      return factory().verum();
+    return this.parse(new ByteArrayInputStream(in.getBytes()));
+  }
 
   /**
    * Returns the factory of this parser.
@@ -66,6 +120,6 @@ public abstract class FormulaParser {
 
   @Override
   public String toString() {
-    return this.getClass().getSimpleName();
+    return getClass().getSimpleName();
   }
 }

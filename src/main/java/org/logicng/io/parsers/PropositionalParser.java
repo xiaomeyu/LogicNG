@@ -28,16 +28,8 @@
 
 package org.logicng.io.parsers;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.logicng.formulas.Formula;
 import org.logicng.formulas.FormulaFactory;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * A parser for propositional formulas.
@@ -63,51 +55,15 @@ import java.io.InputStream;
  */
 public final class PropositionalParser extends FormulaParser {
 
-  private final PropositionalLexer lexer;
-  private final LogicNGPropositionalParser parser;
-
   /**
    * Constructs a new parser.
    * @param f the formula factory
    */
   public PropositionalParser(final FormulaFactory f) {
     super(f);
-    ANTLRInputStream input = new ANTLRInputStream();
-    this.lexer = new PropositionalLexer(input);
-    CommonTokenStream tokens = new CommonTokenStream(this.lexer);
-    this.parser = new LogicNGPropositionalParser(tokens);
-    this.parser.setFormulaFactory(f);
-    this.lexer.removeErrorListeners();
-    this.parser.removeErrorListeners();
-    this.parser.setErrorHandler(new BailErrorStrategy());
-  }
-
-  /**
-   * Parses and returns a given input stream.
-   * @param inputStream an input stream
-   * @return the {@link Formula} representation of this stream
-   * @throws ParserException if there was a problem with the input stream
-   */
-  public Formula parse(InputStream inputStream) throws ParserException {
-    try {
-      ANTLRInputStream input = new ANTLRInputStream(inputStream);
-      this.lexer.setInputStream(input);
-      CommonTokenStream tokens = new CommonTokenStream(this.lexer);
-      this.parser.setInputStream(tokens);
-      return this.parser.formula().f;
-    } catch (IOException e) {
-      throw new ParserException("IO exception when parsing the formula", e);
-    } catch (ParseCancellationException e) {
-      throw new ParserException("Parse cancellation exception when parsing the formula", e);
-    } catch (LexerException e) {
-      throw new ParserException("Lexer exception when parsing the formula.", e);
-    }
-  }
-
-  @Override
-  public Formula parse(final String in) throws ParserException {
-    if (in == null)
-      return factory().verum();
-    return this.parse(new ByteArrayInputStream(in.getBytes()));
+      final PropositionalLexer lexer = new PropositionalLexer(null);
+      final CommonTokenStream tokens = new CommonTokenStream(lexer);
+      final ParserWithFormula parser = new LogicNGPropositionalParser(tokens);
+      setLexerAndParser(lexer, parser);
   }
 }

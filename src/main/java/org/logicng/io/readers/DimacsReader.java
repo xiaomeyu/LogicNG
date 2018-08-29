@@ -31,7 +31,6 @@ package org.logicng.io.readers;
 import org.logicng.formulas.Formula;
 import org.logicng.formulas.FormulaFactory;
 import org.logicng.formulas.Literal;
-import org.logicng.io.parsers.ParserException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,88 +51,84 @@ import java.util.List;
  */
 public final class DimacsReader {
 
-  /**
-   * Private constructor.
-   */
-  private DimacsReader() {
-    // Intentionally left empty.
-  }
-
-  /**
-   * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
-   * @param file the file
-   * @param f    the formula factory
-   * @return the list of formulas (clauses)
-   * @throws IOException     if there was a problem reading the file
-   * @throws ParserException if there was a problem parsing the formula
-   */
-  public static List<Formula> readCNF(final File file, final FormulaFactory f) throws IOException, ParserException {
-    return readCNF(file, f, "v");
-  }
-
-  /**
-   * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
-   * @param file   the file
-   * @param f      the formula factory
-   * @param prefix the prefix for the variable names
-   * @return the list of formulas (clauses)
-   * @throws IOException if there was a problem reading the file
-   */
-  public static List<Formula> readCNF(final File file, final FormulaFactory f, final String prefix) throws IOException {
-    List<Formula> result = new ArrayList<Formula>();
-    final BufferedReader br = new BufferedReader(new FileReader(file));
-    try {
-      while (br.ready()) {
-        final String line = br.readLine();
-        if (!line.startsWith("c") && !line.startsWith("p") && !line.trim().isEmpty()) {
-          String[] split = line.split("\\s+");
-          if (!"0".equals(split[split.length - 1].trim()))
-            throw new IllegalArgumentException("Line " + line + " did not end with 0.");
-          LinkedHashSet<Literal> vars = new LinkedHashSet<Literal>(split.length - 1);
-          for (int i = 0; i < split.length - 1; i++) {
-            String lit = split[i].trim();
-            if (!lit.isEmpty()) {
-              if (lit.startsWith("-"))
-                vars.add(f.literal(prefix + split[i].trim().substring(1), false));
-              else
-                vars.add(f.variable(prefix + split[i].trim()));
-            }
-          }
-          result.add(f.or(vars));
-        }
-      }
-    } finally {
-      br.close();
+    /**
+     * Private constructor.
+     */
+    private DimacsReader() {
+        // Intentionally left empty.
     }
-    return result;
-  }
+
+    /**
+     * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
+     * @param file the file
+     * @param f    the formula factory
+     * @return the list of formulas (clauses)
+     * @throws IOException if there was a problem reading the file
+     */
+    public static List<Formula> readCNF(final File file, final FormulaFactory f) throws IOException {
+        return readCNF(file, f, "v");
+    }
+
+    /**
+     * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
+     * @param file   the file
+     * @param f      the formula factory
+     * @param prefix the prefix for the variable names
+     * @return the list of formulas (clauses)
+     * @throws IOException if there was a problem reading the file
+     */
+    public static List<Formula> readCNF(final File file, final FormulaFactory f, final String prefix) throws IOException {
+        final List<Formula> result = new ArrayList<Formula>();
+        final BufferedReader br = new BufferedReader(new FileReader(file));
+        try {
+            while (br.ready()) {
+                final String line = br.readLine();
+                if (!line.startsWith("c") && !line.startsWith("p") && !line.trim().isEmpty()) {
+                    final String[] split = line.split("\\s+");
+                    if (!"0".equals(split[split.length - 1].trim()))
+                        throw new IllegalArgumentException("Line " + line + " did not end with 0.");
+                    final LinkedHashSet<Literal> vars = new LinkedHashSet<Literal>(split.length - 1);
+                    for (int i = 0; i < split.length - 1; i++) {
+                        final String lit = split[i].trim();
+                        if (!lit.isEmpty()) {
+                            if (lit.startsWith("-"))
+                                vars.add(f.literal(prefix + split[i].trim().substring(1), false));
+                            else
+                                vars.add(f.variable(prefix + split[i].trim()));
+                        }
+                    }
+                    result.add(f.or(vars));
+                }
+            }
+        } finally {
+            br.close();
+        }
+        return result;
+    }
 
 
-  /**
-   * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
-   * @param fileName the file name
-   * @param f        the formula factory
-   * @return the list of formulas (clauses)
-   * @throws IOException     if there was a problem reading the file
-   * @throws ParserException if there was a problem parsing the formula
-   */
-  public static List<Formula> readCNF(final String fileName, final FormulaFactory f) throws IOException, ParserException {
-    return readCNF(new File(fileName), f, "v");
-  }
+    /**
+     * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
+     * @param fileName the file name
+     * @param f        the formula factory
+     * @return the list of formulas (clauses)
+     * @throws IOException if there was a problem reading the file
+     */
+    public static List<Formula> readCNF(final String fileName, final FormulaFactory f) throws IOException {
+        return readCNF(new File(fileName), f, "v");
+    }
 
-  /**
-   * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
-   * @param fileName the file name
-   * @param f        the formula factory
-   * @param prefix   the prefix for the variable names
-   * @return the list of formulas (clauses)
-   * @throws IOException     if there was a problem reading the file
-   * @throws ParserException if there was a problem parsing the formula
-   */
-  public static List<Formula> readCNF(final String fileName, final FormulaFactory f, final String prefix)
-          throws IOException, ParserException {
-    return readCNF(new File(fileName), f, prefix);
-  }
+    /**
+     * Reads a given DIMACS CNF file and returns the contained clauses as a list of formulas.
+     * @param fileName the file name
+     * @param f        the formula factory
+     * @param prefix   the prefix for the variable names
+     * @return the list of formulas (clauses)
+     * @throws IOException if there was a problem reading the file
+     */
+    public static List<Formula> readCNF(final String fileName, final FormulaFactory f, final String prefix) throws IOException {
+        return readCNF(new File(fileName), f, prefix);
+    }
 
 
 }
