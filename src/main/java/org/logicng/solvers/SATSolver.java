@@ -452,4 +452,11 @@ public abstract class SATSolver {
    * @return the unsat core
    */
   public abstract UNSATCore<Proposition> unsatCore();
+
+  /**
+   * Returns all unit propagated literals on level 0 of the current formula on the solver.
+   * If the formula is UNSAT, {@code null} will be returned.
+   * @return all unit propagated literals on level 0
+   */
+  public abstract SortedSet<Literal> upZeroLiterals();
 }
