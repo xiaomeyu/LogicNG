@@ -64,12 +64,12 @@ public final class PBConfig extends Configuration {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("PBConfig{\n");
-    sb.append("pbEncoder=").append(this.pbEncoder).append("\n");
-    sb.append("binaryMergeUseGAC=").append(this.binaryMergeUseGAC).append("\n");
-    sb.append("binaryMergeNoSupportForSingleBit=").append(this.binaryMergeNoSupportForSingleBit).append("\n");
-    sb.append("binaryMergeUseWatchDog=").append(this.binaryMergeUseWatchDog).append("\n");
-    sb.append("}\n");
+    final StringBuilder sb = new StringBuilder("PBConfig{").append(String.format("%n"));
+    sb.append("pbEncoder=").append(this.pbEncoder).append(String.format("%n"));
+    sb.append("binaryMergeUseGAC=").append(this.binaryMergeUseGAC).append(String.format("%n"));
+    sb.append("binaryMergeNoSupportForSingleBit=").append(this.binaryMergeNoSupportForSingleBit).append(String.format("%n"));
+    sb.append("binaryMergeUseWatchDog=").append(this.binaryMergeUseWatchDog).append(String.format("%n"));
+    sb.append("}").append(String.format("%n"));
     return sb.toString();
   }
 

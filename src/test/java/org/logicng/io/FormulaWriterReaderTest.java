@@ -41,8 +41,10 @@ import org.logicng.io.writers.FormulaWriter;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Unit tests for {@link org.logicng.io.writers.FormulaWriter} and {@link org.logicng.io.readers.FormulaReader}.
@@ -53,7 +55,7 @@ public class FormulaWriterReaderTest {
 
   @Test
   public void testSimpleFormulaOneLine() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula1.txt";
+    final String fileName = "src/test/resources/writers/temp/simple_formula1.txt";
     final File file = new File(fileName);
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
@@ -78,7 +80,7 @@ public class FormulaWriterReaderTest {
 
   @Test
   public void testSimpleFormulaMultiLine() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula2.txt";
+    final String fileName = "src/test/resources/writers/temp/simple_formula2.txt";
     final File file = new File(fileName);
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
@@ -101,7 +103,7 @@ public class FormulaWriterReaderTest {
 
   @Test
   public void testPBFormulaOneLine() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula3.txt";
+    final String fileName = "src/test/resources/writers/temp/simple_formula3.txt";
     final File file = new File(fileName);
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PseudoBooleanParser(f).parse("A & B & ~(C | (D => ~E)) & (2*y + 3*y >= 4) & (x <= 1)");
@@ -126,7 +128,7 @@ public class FormulaWriterReaderTest {
 
   @Test
   public void testPBFormulaMultiLine() throws ParserException, IOException {
-    final String fileName = "tests/writers/temp/simple_formula4.txt";
+    final String fileName = "src/test/resources/writers/temp/simple_formula4.txt";
     final File file = new File(fileName);
     final FormulaFactory f = new FormulaFactory();
     final Formula p1 = new PseudoBooleanParser(f).parse("A & B & ~(C | (D => ~E)) & (2*y + 3*y >= 4) & (x <= 1)");
@@ -141,6 +143,40 @@ public class FormulaWriterReaderTest {
         count++;
       }
       Assert.assertEquals(5, count);
+    } finally {
+      reader.close();
+      file.delete();
+    }
+  }
+
+  @Test
+  public void testSimpleFormulaOneLineFormatter() throws ParserException, IOException {
+    final String fileName = "src/test/resources/writers/temp/simple_formula5.txt";
+    final File file = new File(fileName);
+    final FormulaFactory f = new FormulaFactory();
+    final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
+    FormulaWriter.write(fileName, p1, false, new UTF8StringRepresentation());
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+    try {
+      Assert.assertEquals("A ∧ B ∧ ¬(C ∨ (D ⇒ ¬E))", reader.readLine());
+    } finally {
+      reader.close();
+      file.delete();
+    }
+  }
+
+  @Test
+  public void testSimpleFormulaMultiLineFormatter() throws ParserException, IOException {
+    final String fileName = "src/test/resources/writers/temp/simple_formula6.txt";
+    final File file = new File(fileName);
+    final FormulaFactory f = new FormulaFactory();
+    final Formula p1 = new PropositionalParser(f).parse("A & B & ~(C | (D => ~E))");
+    FormulaWriter.write(fileName, p1, true, new UTF8StringRepresentation());
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+    try {
+      Assert.assertEquals("A", reader.readLine());
+      Assert.assertEquals("B", reader.readLine());
+      Assert.assertEquals("¬(C ∨ (D ⇒ ¬E))", reader.readLine());
     } finally {
       reader.close();
       file.delete();

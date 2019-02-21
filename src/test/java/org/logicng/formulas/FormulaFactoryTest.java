@@ -51,26 +51,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FormulaFactoryTest {
 
   @Test
+  public void testConstant() {
+    final FormulaFactory f = new FormulaFactory();
+    Assert.assertEquals(f.verum(), f.constant(true));
+    Assert.assertEquals(f.falsum(), f.constant(false));
+  }
+
+  @Test
   public void testToString() {
     final FormulaFactory f = new FormulaFactory("MyFormulaFactory");
     f.variable("a");
     f.literal("b", false);
     f.and(f.variable("a"), f.literal("b", false));
     f.or(f.variable("a"), f.literal("b", false), f.variable("x"), f.implication(f.variable("a"), f.variable("x")));
-    final String expected = "Name:              MyFormulaFactory\n" +
-            "Positive Literals: 3\n" +
-            "Negative Literals: 3\n" +
-            "Negations:         1\n" +
-            "Implications:      1\n" +
-            "Equivalences:      0\n" +
-            "Conjunctions (2):  1\n" +
-            "Conjunctions (3):  0\n" +
-            "Conjunctions (4):  0\n" +
-            "Conjunctions (>4): 0\n" +
-            "Disjunctions (2):  0\n" +
-            "Disjunctions (3):  0\n" +
-            "Disjunctions (4):  1\n" +
-            "Disjunctions (>4): 0\n";
+    final String expected = String.format("Name:              MyFormulaFactory%n" +
+            "Positive Literals: 3%n" +
+            "Negative Literals: 3%n" +
+            "Negations:         1%n" +
+            "Implications:      1%n" +
+            "Equivalences:      0%n" +
+            "Conjunctions (2):  1%n" +
+            "Conjunctions (3):  0%n" +
+            "Conjunctions (4):  0%n" +
+            "Conjunctions (>4): 0%n" +
+            "Disjunctions (2):  0%n" +
+            "Disjunctions (3):  0%n" +
+            "Disjunctions (4):  1%n" +
+            "Disjunctions (>4): 0%n" +
+            "Pseudo Booleans:   0%n");
     Assert.assertEquals(expected, f.toString());
   }
 

@@ -67,8 +67,8 @@ public class UTF8StringRepresentationTest {
 
   @Test
   public void testSpecialCases() {
-    Variable var = F.f.variable("\ntest9t");
-    Assert.assertEquals("\ntest9t", F.f.string(var, sr));
+    Variable var = F.f.variable(String.format("%ntest9t"));
+    Assert.assertEquals(String.format("%ntest9t"), F.f.string(var, sr));
     Assert.assertEquals("UTF8StringRepresentation", sr.toString());
   }
 }

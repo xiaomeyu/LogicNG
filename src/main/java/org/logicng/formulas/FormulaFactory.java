@@ -348,6 +348,15 @@ public class FormulaFactory {
   }
 
   /**
+   * Returns the constant "True" or "False" depending on the given value.
+   * @param value the given value
+   * @return the constant
+   */
+  public Constant constant(final boolean value) {
+    return value ? cTrue : cFalse;
+  }
+
+  /**
    * Creates a new n-ary operator with a given type and a list of operands.
    * @param type     the type of the formula
    * @param operands the list of operands
@@ -988,7 +997,32 @@ public class FormulaFactory {
     if (this.importer == null) {
       this.importer = new FormulaFactoryImporter(this);
     }
-    return formula.transform(this.importer);
+    final Formula imported = formula.transform(this.importer);
+    adjustCounters(imported);
+    return imported;
+  }
+
+  private void adjustCounters(Formula formula) {
+    for (Variable variable : formula.variables()) {
+      if (variable.name().startsWith(CC_PREFIX)) {
+        String[] tokens = variable.name().split("_");
+        int counter = Integer.parseInt(tokens[tokens.length - 1]);
+        if (this.ccCounter < counter)
+          this.ccCounter = counter + 1;
+      }
+      if (variable.name().startsWith(CNF_PREFIX)) {
+        String[] tokens = variable.name().split("_");
+        int counter = Integer.parseInt(tokens[tokens.length - 1]);
+        if (this.cnfCounter < counter)
+          this.cnfCounter = counter + 1;
+      }
+      if (variable.name().startsWith(PB_PREFIX)) {
+        String[] tokens = variable.name().split("_");
+        int counter = Integer.parseInt(tokens[tokens.length - 1]);
+        if (this.pbCounter < counter)
+          this.pbCounter = counter + 1;
+      }
+    }
   }
 
   /**
@@ -1093,20 +1127,21 @@ public class FormulaFactory {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("Name:              ").append(this.name).append("\n");
-    sb.append("Positive Literals: ").append(this.posLiterals.size()).append("\n");
-    sb.append("Negative Literals: ").append(this.negLiterals.size()).append("\n");
-    sb.append("Negations:         ").append(this.nots.size()).append("\n");
-    sb.append("Implications:      ").append(this.implications.size()).append("\n");
-    sb.append("Equivalences:      ").append(this.equivalences.size()).append("\n");
-    sb.append("Conjunctions (2):  ").append(this.ands2.size()).append("\n");
-    sb.append("Conjunctions (3):  ").append(this.ands3.size()).append("\n");
-    sb.append("Conjunctions (4):  ").append(this.ands4.size()).append("\n");
-    sb.append("Conjunctions (>4): ").append(this.andsN.size()).append("\n");
-    sb.append("Disjunctions (2):  ").append(this.ors2.size()).append("\n");
-    sb.append("Disjunctions (3):  ").append(this.ors3.size()).append("\n");
-    sb.append("Disjunctions (4):  ").append(this.ors4.size()).append("\n");
-    sb.append("Disjunctions (>4): ").append(this.orsN.size()).append("\n");
+    sb.append("Name:              ").append(this.name).append(String.format("%n"));
+    sb.append("Positive Literals: ").append(this.posLiterals.size()).append(String.format("%n"));
+    sb.append("Negative Literals: ").append(this.negLiterals.size()).append(String.format("%n"));
+    sb.append("Negations:         ").append(this.nots.size()).append(String.format("%n"));
+    sb.append("Implications:      ").append(this.implications.size()).append(String.format("%n"));
+    sb.append("Equivalences:      ").append(this.equivalences.size()).append(String.format("%n"));
+    sb.append("Conjunctions (2):  ").append(this.ands2.size()).append(String.format("%n"));
+    sb.append("Conjunctions (3):  ").append(this.ands3.size()).append(String.format("%n"));
+    sb.append("Conjunctions (4):  ").append(this.ands4.size()).append(String.format("%n"));
+    sb.append("Conjunctions (>4): ").append(this.andsN.size()).append(String.format("%n"));
+    sb.append("Disjunctions (2):  ").append(this.ors2.size()).append(String.format("%n"));
+    sb.append("Disjunctions (3):  ").append(this.ors3.size()).append(String.format("%n"));
+    sb.append("Disjunctions (4):  ").append(this.ors4.size()).append(String.format("%n"));
+    sb.append("Disjunctions (>4): ").append(this.orsN.size()).append(String.format("%n"));
+    sb.append("Pseudo Booleans:   ").append(this.pbConstraints.size()).append(String.format("%n"));
     return sb.toString();
   }
 

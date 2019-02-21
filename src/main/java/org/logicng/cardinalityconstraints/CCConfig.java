@@ -102,17 +102,17 @@ public final class CCConfig extends Configuration {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("CCConfig{\n");
-    sb.append("amoEncoder=").append(this.amoEncoder).append("\n");
-    sb.append("amkEncoder=").append(this.amkEncoder).append("\n");
-    sb.append("alkEncoder=").append(this.alkEncoder).append("\n");
-    sb.append("exkEncoder=").append(this.exkEncoder).append("\n");
-    sb.append("bimanderGroupSize=").append(this.bimanderGroupSize).append("\n");
-    sb.append("bimanderFixedGroupSize=").append(this.bimanderFixedGroupSize).append("\n");
-    sb.append("nestingGroupSize=").append(this.nestingGroupSize).append("\n");
-    sb.append("productRecursiveBound=").append(this.productRecursiveBound).append("\n");
-    sb.append("commanderGroupSize=").append(this.commanderGroupSize).append("\n");
-    sb.append("}\n");
+    final StringBuilder sb = new StringBuilder("CCConfig{").append(String.format("%n"));
+    sb.append("amoEncoder=").append(this.amoEncoder).append(String.format("%n"));
+    sb.append("amkEncoder=").append(this.amkEncoder).append(String.format("%n"));
+    sb.append("alkEncoder=").append(this.alkEncoder).append(String.format("%n"));
+    sb.append("exkEncoder=").append(this.exkEncoder).append(String.format("%n"));
+    sb.append("bimanderGroupSize=").append(this.bimanderGroupSize).append(String.format("%n"));
+    sb.append("bimanderFixedGroupSize=").append(this.bimanderFixedGroupSize).append(String.format("%n"));
+    sb.append("nestingGroupSize=").append(this.nestingGroupSize).append(String.format("%n"));
+    sb.append("productRecursiveBound=").append(this.productRecursiveBound).append(String.format("%n"));
+    sb.append("commanderGroupSize=").append(this.commanderGroupSize).append(String.format("%n"));
+    sb.append("}").append(String.format("%n"));
     return sb.toString();
   }
 

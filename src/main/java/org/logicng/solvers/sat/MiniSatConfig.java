@@ -109,20 +109,20 @@ public final class MiniSatConfig extends Configuration {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("MiniSatConfig{\n");
-    sb.append("varDecay=").append(this.varDecay).append("\n");
-    sb.append("varInc=").append(this.varInc).append("\n");
-    sb.append("clauseMin=").append(this.clauseMin).append("\n");
-    sb.append("restartFirst=").append(this.restartFirst).append("\n");
-    sb.append("restartInc=").append(this.restartInc).append("\n");
-    sb.append("clauseDecay=").append(this.clauseDecay).append("\n");
-    sb.append("removeSatisfied=").append(this.removeSatisfied).append("\n");
-    sb.append("learntsizeFactor=").append(this.learntsizeFactor).append("\n");
-    sb.append("learntsizeInc=").append(this.learntsizeInc).append("\n");
-    sb.append("incremental=").append(this.incremental).append("\n");
-    sb.append("initialPhase=").append(this.initialPhase).append("\n");
-    sb.append("proofGeneration=").append(this.proofGeneration).append("\n");
-    sb.append("}\n");
+    final StringBuilder sb = new StringBuilder("MiniSatConfig{").append(String.format("%n"));
+    sb.append("varDecay=").append(this.varDecay).append(String.format("%n"));
+    sb.append("varInc=").append(this.varInc).append(String.format("%n"));
+    sb.append("clauseMin=").append(this.clauseMin).append(String.format("%n"));
+    sb.append("restartFirst=").append(this.restartFirst).append(String.format("%n"));
+    sb.append("restartInc=").append(this.restartInc).append(String.format("%n"));
+    sb.append("clauseDecay=").append(this.clauseDecay).append(String.format("%n"));
+    sb.append("removeSatisfied=").append(this.removeSatisfied).append(String.format("%n"));
+    sb.append("learntsizeFactor=").append(this.learntsizeFactor).append(String.format("%n"));
+    sb.append("learntsizeInc=").append(this.learntsizeInc).append(String.format("%n"));
+    sb.append("incremental=").append(this.incremental).append(String.format("%n"));
+    sb.append("initialPhase=").append(this.initialPhase).append(String.format("%n"));
+    sb.append("proofGeneration=").append(this.proofGeneration).append(String.format("%n"));
+    sb.append("}").append(String.format("%n"));
     return sb.toString();
   }
 

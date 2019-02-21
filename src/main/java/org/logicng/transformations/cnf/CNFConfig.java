@@ -66,13 +66,13 @@ public final class CNFConfig extends Configuration {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("CNFConfig{\n");
-    sb.append("algorithm=").append(this.algorithm).append("\n");
-    sb.append("fallbackAlgorithmForAdvancedEncoding=").append(this.fallbackAlgorithmForAdvancedEncoding).append("\n");
-    sb.append("distributedBoundary=").append(this.distributionBoundary).append("\n");
-    sb.append("createdClauseBoundary=").append(this.createdClauseBoundary).append("\n");
-    sb.append("atomBoundary=").append(this.atomBoundary).append("\n");
-    sb.append("}\n");
+    final StringBuilder sb = new StringBuilder(String.format("CNFConfig{%n"));
+    sb.append("algorithm=").append(this.algorithm).append(String.format("%n"));
+    sb.append("fallbackAlgorithmForAdvancedEncoding=").append(this.fallbackAlgorithmForAdvancedEncoding).append(String.format("%n"));
+    sb.append("distributedBoundary=").append(this.distributionBoundary).append(String.format("%n"));
+    sb.append("createdClauseBoundary=").append(this.createdClauseBoundary).append(String.format("%n"));
+    sb.append("atomBoundary=").append(this.atomBoundary).append(String.format("%n"));
+    sb.append("}").append(String.format("%n"));
     return sb.toString();
   }
 

@@ -75,21 +75,21 @@ public final class GlucoseConfig extends Configuration {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder("GlucoseConfig{\n");
-    sb.append("lbLBDMinimizingClause=").append(this.lbLBDMinimizingClause).append("\n");
-    sb.append("lbLBDFrozenClause=").append(this.lbLBDFrozenClause).append("\n");
-    sb.append("lbSizeMinimizingClause=").append(this.lbSizeMinimizingClause).append("\n");
-    sb.append("firstReduceDB=").append(this.firstReduceDB).append("\n");
-    sb.append("specialIncReduceDB=").append(this.specialIncReduceDB).append("\n");
-    sb.append("incReduceDB=").append(this.incReduceDB).append("\n");
-    sb.append("factorK=").append(this.factorK).append("\n");
-    sb.append("factorR=").append(this.factorR).append("\n");
-    sb.append("sizeLBDQueue=").append(this.sizeLBDQueue).append("\n");
-    sb.append("sizeTrailQueue=").append(this.sizeTrailQueue).append("\n");
-    sb.append("reduceOnSize=").append(this.reduceOnSize).append("\n");
-    sb.append("reduceOnSizeSize=").append(this.reduceOnSizeSize).append("\n");
-    sb.append("maxVarDecay=").append(this.maxVarDecay).append("\n");
-    sb.append("}\n");
+    final StringBuilder sb = new StringBuilder("GlucoseConfig{").append(String.format("%n"));
+    sb.append("lbLBDMinimizingClause=").append(this.lbLBDMinimizingClause).append(String.format("%n"));
+    sb.append("lbLBDFrozenClause=").append(this.lbLBDFrozenClause).append(String.format("%n"));
+    sb.append("lbSizeMinimizingClause=").append(this.lbSizeMinimizingClause).append(String.format("%n"));
+    sb.append("firstReduceDB=").append(this.firstReduceDB).append(String.format("%n"));
+    sb.append("specialIncReduceDB=").append(this.specialIncReduceDB).append(String.format("%n"));
+    sb.append("incReduceDB=").append(this.incReduceDB).append(String.format("%n"));
+    sb.append("factorK=").append(this.factorK).append(String.format("%n"));
+    sb.append("factorR=").append(this.factorR).append(String.format("%n"));
+    sb.append("sizeLBDQueue=").append(this.sizeLBDQueue).append(String.format("%n"));
+    sb.append("sizeTrailQueue=").append(this.sizeTrailQueue).append(String.format("%n"));
+    sb.append("reduceOnSize=").append(this.reduceOnSize).append(String.format("%n"));
+    sb.append("reduceOnSizeSize=").append(this.reduceOnSizeSize).append(String.format("%n"));
+    sb.append("maxVarDecay=").append(this.maxVarDecay).append(String.format("%n"));
+    sb.append("}").append(String.format("%n"));
     return sb.toString();
   }
 

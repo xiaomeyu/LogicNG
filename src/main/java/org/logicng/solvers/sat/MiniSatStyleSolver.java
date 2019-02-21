@@ -631,28 +631,28 @@ public abstract class MiniSatStyleSolver {
   @Override
   public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("ok            ").append(ok).append("\n");
-    sb.append("qhead         ").append(qhead).append("\n");
-    sb.append("#clauses      ").append(clauses.size()).append("\n");
-    sb.append("#learnts      ").append(learnts.size()).append("\n");
-    sb.append("#watches      ").append(watches.size()).append("\n");
-    sb.append("#vars         ").append(vars.size()).append("\n");
-    sb.append("#orderheap    ").append(orderHeap.size()).append("\n");
-    sb.append("#trail        ").append(trail.size()).append("\n");
-    sb.append("#trailLim     ").append(trailLim.size()).append("\n");
+    sb.append("ok            ").append(ok).append(String.format("%n"));
+    sb.append("qhead         ").append(qhead).append(String.format("%n"));
+    sb.append("#clauses      ").append(clauses.size()).append(String.format("%n"));
+    sb.append("#learnts      ").append(learnts.size()).append(String.format("%n"));
+    sb.append("#watches      ").append(watches.size()).append(String.format("%n"));
+    sb.append("#vars         ").append(vars.size()).append(String.format("%n"));
+    sb.append("#orderheap    ").append(orderHeap.size()).append(String.format("%n"));
+    sb.append("#trail        ").append(trail.size()).append(String.format("%n"));
+    sb.append("#trailLim     ").append(trailLim.size()).append(String.format("%n"));
 
-    sb.append("model         ").append(model).append("\n");
-    sb.append("conflict      ").append(conflict).append("\n");
-    sb.append("assumptions   ").append(assumptions).append("\n");
-    sb.append("#seen         ").append(seen.size()).append("\n");
-    sb.append("#stack        ").append(analyzeStack.size()).append("\n");
-    sb.append("#toclear      ").append(analyzeToClear.size()).append("\n");
+    sb.append("model         ").append(model).append(String.format("%n"));
+    sb.append("conflict      ").append(conflict).append(String.format("%n"));
+    sb.append("assumptions   ").append(assumptions).append(String.format("%n"));
+    sb.append("#seen         ").append(seen.size()).append(String.format("%n"));
+    sb.append("#stack        ").append(analyzeStack.size()).append(String.format("%n"));
+    sb.append("#toclear      ").append(analyzeToClear.size()).append(String.format("%n"));
 
-    sb.append("claInc        ").append(claInc).append("\n");
-    sb.append("simpDBAssigns ").append(simpDBAssigns).append("\n");
-    sb.append("simpDBProps   ").append(simpDBProps).append("\n");
-    sb.append("#clause lits  ").append(clausesLiterals).append("\n");
-    sb.append("#learnts lits ").append(learntsLiterals).append("\n");
+    sb.append("claInc        ").append(claInc).append(String.format("%n"));
+    sb.append("simpDBAssigns ").append(simpDBAssigns).append(String.format("%n"));
+    sb.append("simpDBProps   ").append(simpDBProps).append(String.format("%n"));
+    sb.append("#clause lits  ").append(clausesLiterals).append(String.format("%n"));
+    sb.append("#learnts lits ").append(learntsLiterals).append(String.format("%n"));
     return sb.toString();
   }
 

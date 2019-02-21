@@ -164,12 +164,12 @@ public class PseudoBooleanParserTest {
     final PseudoBooleanParser parser = new PseudoBooleanParser(F.f);
     Assert.assertEquals(F.f.verum(), parser.parse(" "));
     Assert.assertEquals(F.f.verum(), parser.parse("\t"));
-    Assert.assertEquals(F.f.verum(), parser.parse("\n"));
+    Assert.assertEquals(F.f.verum(), parser.parse(String.format("%n")));
     Assert.assertEquals(F.f.verum(), parser.parse("\r"));
-    Assert.assertEquals(F.f.verum(), parser.parse(" \r\n\n  \t"));
-    Assert.assertEquals(F.AND1, parser.parse("a\n&\tb"));
+    Assert.assertEquals(F.f.verum(), parser.parse(String.format(" \r%n%n  \t")));
+    Assert.assertEquals(F.AND1, parser.parse(String.format("a%n&\tb")));
     Assert.assertEquals(F.IMP1, parser.parse(" a\r=>\t\tb"));
-    Assert.assertEquals(F.PBC1, parser.parse(" 2\n*a\r+\n\n-4*\tb    +3*x=2"));
+    Assert.assertEquals(F.PBC1, parser.parse(String.format(" 2%n*a\r+%n%n-4*\tb    +3*x=2")));
   }
 
   @Test

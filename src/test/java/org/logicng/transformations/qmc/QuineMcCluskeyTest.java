@@ -87,6 +87,22 @@ public class QuineMcCluskeyTest {
     assertThat(f.equivalence(formula, dnf).holds(new TautologyPredicate(f))).isTrue();
   }
 
+  /**
+   * Example from <a href="https://github.com/logic-ng/LogicNG/issues/15">issue 15</a>.
+   * Ensure only original formula variables are returned, i.e., no auxiliary variables are returned.
+   * @throws ParserException if any malformed formula is encountered
+   */
+  @Test
+  public void testSimple3() throws ParserException {
+    final FormulaFactory f = new FormulaFactory();
+    final PropositionalParser p = new PropositionalParser(f);
+    final Formula formula = p.parse("~5 & ~4 & 3 & 2 & 1 | ~3 & ~7 & ~2 & 1 | ~6 & 1 & ~3 & 2 | ~9 & 6 & 8 & ~1 | 3 & 4 & 2 & 1 | ~2 & 7 & 1 | ~10 & ~8 & ~1");
+    final Formula dnf = QuineMcCluskeyAlgorithm.compute(formula);
+    assertThat(dnf.holds(new DNFPredicate())).isTrue();
+    assertThat(f.equivalence(formula, dnf).holds(new TautologyPredicate(f))).isTrue();
+    assertThat(formula.variables()).containsAll(dnf.variables());
+  }
+
   @Test
   public void testLarge1() throws ParserException {
     final FormulaFactory f = new FormulaFactory();
@@ -100,7 +116,7 @@ public class QuineMcCluskeyTest {
   @Test
   public void testLarge2() throws ParserException, IOException {
     final FormulaFactory f = new FormulaFactory();
-    final Formula formula = FormulaReader.readPseudoBooleanFormula("tests/formulas/large_formula.txt", f);
+    final Formula formula = FormulaReader.readPseudoBooleanFormula("src/test/resources/formulas/large_formula.txt", f);
     final SATSolver solver = MiniSat.miniSat(f);
     solver.add(formula);
     final List<Assignment> models = solver.enumerateAllModels(Arrays.asList(
@@ -126,7 +142,7 @@ public class QuineMcCluskeyTest {
   @Test
   public void testLarge3() throws ParserException, IOException {
     final FormulaFactory f = new FormulaFactory();
-    final Formula formula = FormulaReader.readPseudoBooleanFormula("tests/formulas/large_formula.txt", f);
+    final Formula formula = FormulaReader.readPseudoBooleanFormula("src/test/resources/formulas/large_formula.txt", f);
     final SATSolver solver = MiniSat.miniSat(f);
     solver.add(formula);
     final List<Assignment> models = solver.enumerateAllModels(Arrays.asList(
@@ -285,7 +301,7 @@ public class QuineMcCluskeyTest {
   }
 
   /**
-   * The example from {@link https://de.wikipedia.org/wiki/Verfahren_nach_Quine_und_McCluskey}
+   * The example from <a href="https://de.wikipedia.org/wiki/Verfahren_nach_Quine_und_McCluskey">Quine-McCluskey</a>
    */
   @Test
   public void testComputePrimeImplicantsWiki() throws ParserException {
@@ -338,7 +354,7 @@ public class QuineMcCluskeyTest {
   public void testSmallFormulas() throws IOException, ParserException {
     final FormulaFactory f = new FormulaFactory();
     final PropositionalParser p = new PropositionalParser(f);
-    final BufferedReader reader = new BufferedReader(new FileReader("tests/formulas/small_formulas.txt"));
+    final BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/formulas/small_formulas.txt"));
     while (reader.ready()) {
       final Formula formula = p.parse(reader.readLine());
       final List<Variable> variables = new ArrayList<Variable>(formula.variables());

@@ -70,14 +70,14 @@ public class MUSGenerationTest {
     this.pg5 = generatePGPropositions(5);
     this.pg6 = generatePGPropositions(6);
     this.pg7 = generatePGPropositions(7);
-    this.file1 = readDimacs("tests/sat/3col40_5_10.shuffled.cnf");
-    this.file2 = readDimacs("tests/sat/x1_16.shuffled.cnf");
-    this.file3 = readDimacs("tests/sat/grid_10_20.shuffled.cnf");
-    this.file4 = readDimacs("tests/sat/ca032.shuffled.cnf");
+    this.file1 = readDimacs("src/test/resources/sat/3col40_5_10.shuffled.cnf");
+    this.file2 = readDimacs("src/test/resources/sat/x1_16.shuffled.cnf");
+    this.file3 = readDimacs("src/test/resources/sat/grid_10_20.shuffled.cnf");
+    this.file4 = readDimacs("src/test/resources/sat/ca032.shuffled.cnf");
   }
 
   @Test
-  public void testDeletionBasedMUS() throws IOException {
+  public void testDeletionBasedMUS() {
     final MUSGeneration mus = new MUSGeneration();
     final UNSATCore<StandardProposition> mus1 = mus.computeMUS(this.pg3, this.f);
     final UNSATCore<StandardProposition> mus2 = mus.computeMUS(this.pg4, this.f);
@@ -100,7 +100,7 @@ public class MUSGenerationTest {
   }
 
   @Test
-  public void testPlainInsertionBasedMUS() throws IOException {
+  public void testPlainInsertionBasedMUS() {
     final MUSGeneration mus = new MUSGeneration();
     final MUSConfig config = new MUSConfig.Builder().algorithm(MUSConfig.Algorithm.PLAIN_INSERTION).build();
     final UNSATCore<StandardProposition> mus1 = mus.computeMUS(this.pg3, this.f, config);

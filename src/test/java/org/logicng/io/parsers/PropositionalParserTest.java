@@ -134,10 +134,10 @@ public class PropositionalParserTest {
     final PropositionalParser parser = new PropositionalParser(F.f);
     Assert.assertEquals(F.f.verum(), parser.parse(" "));
     Assert.assertEquals(F.f.verum(), parser.parse("\t"));
-    Assert.assertEquals(F.f.verum(), parser.parse("\n"));
+    Assert.assertEquals(F.f.verum(), parser.parse(String.format("%n")));
     Assert.assertEquals(F.f.verum(), parser.parse("\r"));
-    Assert.assertEquals(F.f.verum(), parser.parse(" \r\n\n  \t"));
-    Assert.assertEquals(F.AND1, parser.parse("a\n&\tb"));
+    Assert.assertEquals(F.f.verum(), parser.parse(String.format(" \r%n%n  \t")));
+    Assert.assertEquals(F.AND1, parser.parse(String.format("a%n&\tb")));
     Assert.assertEquals(F.IMP1, parser.parse(" a\r=>\t\tb"));
   }
 

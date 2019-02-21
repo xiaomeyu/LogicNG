@@ -36,7 +36,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 
 /**
  * A dot file writer for BDDs.  Writes the internal data structure of a BDD to a dot file.
@@ -69,20 +68,20 @@ public final class BDDDotFileWriter {
    * @throws IOException if there was a problem writing the file
    */
   public static void write(final File file, final BDD bdd) throws IOException {
-    final StringBuilder sb = new StringBuilder("digraph G {\n");
+    final StringBuilder sb = new StringBuilder(String.format("digraph G {%n"));
     if (!bdd.isContradiction()) {
-      sb.append("  const_true [shape=box, label=\"$true\", style = bold, color = darkgreen];\n");
+      sb.append(String.format("  const_true [shape=box, label=\"$true\", style = bold, color = darkgreen];%n"));
     }
     if (!bdd.isTautology()) {
-      sb.append("  const_false [shape=box, label=\"$false\", style = bold, color = red];\n");
+      sb.append(String.format("  const_false [shape=box, label=\"$false\", style = bold, color = red];%n"));
     }
     for (final BDDFactory.InternalBDDNode internalNode : bdd.internalNodes()) {
       sb.append(String.format("  id_%d [shape=ellipse, label=\"%s\"];%n", internalNode.nodenum(), internalNode.label()));
       sb.append(String.format("  id_%d -> %s [style = dotted, color = red];%n", internalNode.nodenum(), getNodeString(internalNode.low())));
       sb.append(String.format("  id_%d -> %s [color = darkgreen];%n", internalNode.nodenum(), getNodeString(internalNode.high())));
     }
-    sb.append("}\n");
-    final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Charset.forName("UTF-8")));
+    sb.append(String.format("}%n"));
+    final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
     try {
       writer.append(sb);
     } finally {
